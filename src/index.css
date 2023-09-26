@@ -1,0 +1,17 @@
+:root {
+	--page-border-colour: #26282F;
+	--secondary-text-grey: hsl(0, 0%, 58%);
+	--secondary-text-grey-active: hsl(0, 0%, 58%, 50%);
+	--reciped-blue: #6C9EBA;
+	--font-family: Roboto, sans-serif;
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	font-family: var(--font-family);
+	background-color: var(--page-border-colour);
+}

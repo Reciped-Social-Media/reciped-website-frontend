@@ -1,0 +1,12 @@
+.explore-background {
+    background-image: url("../assets/exploreBackground.png");
+    background-size: cover;
+    background-attachment:fixed;
+    background-position: 550px 0px;
+    background-repeat: no-repeat;
+    height: 2000vh;
+}
+
+.explore-content {
+    padding: 2em;
+}

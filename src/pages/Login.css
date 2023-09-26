@@ -1,0 +1,130 @@
+.Login {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    padding: 1.5em;
+    box-sizing: border-box;
+}
+
+.Login__contents {
+    display: flex;
+    flex-direction: column;
+    background-color: hsl(0, 0%, 100%);
+    background-image: url("../assets/background1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    border-radius: 2em;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: scroll;
+    justify-content: center;
+    align-items: center;
+}
+
+.Login__contents::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+.Login__contents-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.Login__form {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(0, 0, 0, 0.5);
+    border-radius: 25px;
+    padding: 2em 4em;
+    box-shadow: 10px 10px 25px 1px rgba(0, 0, 0, 0.5);
+    align-items: center;
+}
+
+.Login__form-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+}
+
+.Login__form-fields {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.Login__form-fields > input {
+    padding: 0.5em 2em;
+    border: none;
+    border-bottom: 1px solid var(--secondary-text-grey);
+    margin-bottom: 2em;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: 1em center;
+    background-color:  rgb(0, 0, 0, 0);
+	color: white;
+}
+
+.Login__form-fields > input#firstName {
+    background-image: url('../assets/icons/person-grey.svg');
+}
+
+.Login__form-fields > input#lastName {
+    background-image: url('../assets/icons/person-grey.svg');
+}
+
+.Login__form-fields > input#username {
+    background-image: url('../assets/icons/username-grey.svg');
+}
+
+.Login__form-fields > input#password {
+    background-image: url('../assets/icons/lock-grey.svg');
+}
+
+.Login__form-fields > button {
+    padding: 1em 2em;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--reciped-blue);
+    color: white;
+    font-weight: bold;
+    margin-top: 1em;
+    cursor: pointer;
+}
+.Login__form-fields > button:disabled {
+    padding: 1em 2em;
+    border: none;
+    border-radius: 25px;
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    margin-top: 1em;
+    cursor: not-allowed;
+}
+
+.Login__href {
+    color: var(--reciped-blue);
+    text-decoration: underline;
+}
+
+.Login__toggle-mode-text {
+    color: white;
+}
+
+.Login__slogan {
+    color: white;
+    font-style: italic;
+}
+
+.Login__alert  {
+	font-size: 0.8em;
+	margin-top: 1em;
+}

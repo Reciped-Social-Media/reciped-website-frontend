@@ -1,0 +1,25 @@
+.RecipeGrid {
+	display:flex;
+	flex-direction: column;
+	padding: 2em;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    margin-top: 20px;
+}
+
+.action-buttons {
+	display: flex;
+	flex-direction: row;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-right: 4rem;
+	padding-bottom: 4rem;
+	padding-left: calc(4rem + 250px);
+    justify-content: space-between;
+}
