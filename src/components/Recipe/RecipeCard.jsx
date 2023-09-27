@@ -37,7 +37,7 @@ const RecipeCard = (props) => {
 	const handleCheck = (event) => {
 		const isChecked = event.target.checked;
 		const accessToken = localStorage.getItem("accessToken");
-		axios.post("http://localhost:4000/togglePublic", { checked: isChecked, recipeId: id }, {
+		axios.post("http://localhost:4000/cookbook/toggle-public", { checked: isChecked, recipeId: id }, {
 			headers: {
 				Authorisation: `Bearer ${accessToken}`,
 			},

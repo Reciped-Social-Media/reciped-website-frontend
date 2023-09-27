@@ -11,7 +11,6 @@ import Recipe from "../components/Recipe/Recipe";
 
 const Explore = () => {
 	const data = useLoaderData();
-	console.log(data);
 	const username = localStorage.getItem("username");
 	const categories = ["All", "Breakfast", "Lunch", "Dinner"];
 	const [showRecipeId, setShowRecipeId] = useState(null);

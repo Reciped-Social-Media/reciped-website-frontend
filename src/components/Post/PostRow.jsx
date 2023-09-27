@@ -4,12 +4,8 @@ import "./PostRow.css";
 import rightArrow from "../../assets/icons/rightArrow.svg";
 import leftArrow from "../../assets/icons/leftArrow.svg";
 
-const itemsPerPage = 4;
-
 const PostRow = (props) => {
-	const recipes = props.recipes;
 	const [scrollPosition, setScrollPosition] = useState(0);
-	const totalPages = Math.ceil(props.recipes.length / itemsPerPage);
 	const scrollLeft = () => {
 		if (scrollPosition > 0) {
 			setScrollPosition((prev) => prev - 1);

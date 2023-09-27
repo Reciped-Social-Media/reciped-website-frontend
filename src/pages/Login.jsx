@@ -237,7 +237,7 @@ export const action = async ({ request }) => {
 		username: data.get("username"),
 		password: data.get("password"),
 	};
-	const res = await axios.post(`http://localhost:4000/${mode}`, authData);
+	const res = await axios.post(`http://localhost:4000/account/${mode}`, authData);
 	console.log(res);
 
 	if (res.data.error) {

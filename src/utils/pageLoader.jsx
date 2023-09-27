@@ -13,7 +13,7 @@ export async function pageLoader(route) {
 	let accessToken = localStorage.getItem("accessToken");
 	const res = await axios.get(`http://localhost:4000/${route}`, {
 		headers: {
-			Authorisation: `Bearer ${accessToken}`,
+			Authorization: `Bearer ${accessToken}`,
 		},
 	});
 	if (res.data.error) {
@@ -22,7 +22,7 @@ export async function pageLoader(route) {
 			throw Error("Not authorized to view this page");
 		}
 		else {
-			const response = await axios.post("http://localhost:4000/token", {
+			const response = await axios.post("http://localhost:4000/account/refresh-session", {
 				refreshToken,
 			});
 			accessToken = response.data.accessToken;

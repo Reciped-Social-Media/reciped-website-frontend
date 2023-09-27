@@ -21,7 +21,7 @@ const SidebarButton = ({ icon, path, text, selected }) => {
 const Sidebar = () => {
 	async function handleLogout() {
 		const refreshToken = localStorage.getItem("refreshToken");
-		await axios.post("http://localhost:4000/logout", { refreshToken });
+		await axios.post("http://localhost:4000/account/logout", { refreshToken });
 		localStorage.removeItem("accessToken");
 		localStorage.removeItem("refreshToken");
 	}

@@ -31,7 +31,7 @@ const StyledRating = styled(Rating)({
 });
 
 const PostModal = (props) => {
-	const { title, id, category } = props.recipe;
+	const { title, recipeId, category } = props.recipe;
 	const [rating, setRating] = useState(0);
 	const [caption, setCaption] = useState("");
 	const [isSuccess, setIsSuccess] = useState(false);
@@ -41,17 +41,21 @@ const PostModal = (props) => {
 	const handlePost = async () => {
 		setIsLoading(true);
 		const accessToken = localStorage.getItem("accessToken");
-		const username = localStorage.getItem("username");
-		const data = { recipeId: id, rating, caption, username, category };
-		const res = await axios.post("http://localhost:4000/post", data, {
+		const res = await axios.post("http://localhost:4000/interaction/post", { recipeId, caption, category }, {
 			headers: {
-				Authorisation: `Bearer ${accessToken}`,
+				Authorization: `Bearer ${accessToken}`,
 			},
 		});
 		if (res.status === 200) {
-			await axios.post("http://localhost:4000/togglePublic", { recipeId: id }, {
+			await axios.post("http://localhost:4000/cookbook/toggle-public", { recipeId }, {
 				headers: {
-					Authorisation: `Bearer ${accessToken}`,
+					Authorization: `Bearer ${accessToken}`,
+				},
+			});
+			const postId = res.data.postId;
+			await axios.post("http://localhost:4000/interaction/review", { postId, comment: null, rating }, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
 				},
 			});
 			setIsLoading(false);

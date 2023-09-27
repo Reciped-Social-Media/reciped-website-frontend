@@ -6,20 +6,16 @@ import "./PostCard.css";
 import mealLogo from "../../assets/icons/meal.svg";
 import editLogo from "../../assets/icons/edit.svg";
 import Rating from "@mui/material/Rating";
-import heartIcon from "../../assets/icons/Favorite.svg";
 import starIcon from "../../assets/stars/full.svg";
 import chatIcon from "../../assets/icons/Chat.svg";
 import Loader from "../Loader/Loader";
-import Recipe from "../Recipe/Recipe";
 import "../Recipe/Recipe.css";
 import "../Recipe/RecipeCard.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 
 const PostCard = (props) => {
-	const { id, userId, username, recipeId, caption, category } = props.postDetails;
-	const [recipeTitle, setRecipeTitle] = useState("");
-	const [userName, setUserName] = useState("");
+	const { id, username, recipeId, caption, category, title } = props.postDetails;
 	const [comments, setComments] = useState([]);
 	const [ratings, setRatings] = useState([]);
 	const [likes, setLikes] = useState([]);
@@ -27,35 +23,21 @@ const PostCard = (props) => {
 
 	const handleRecipeClick = () => {
 		props.setRecipeId(recipeId);
-		props.setRecipeData({ comments, likes, ratings, userName, category });
+		props.setRecipeData({ comments, likes, ratings, username, category });
 		props.handleRecipeClick();
 	};
-
 
 	useEffect(() => {
 		setIsLoading(true);
 		const fetch = async () => {
-			const res = await axios.get(
-				`http://localhost:4000/recipe?id=${recipeId}`,
-				{
-					headers: {
-						Authorisation: `Bearer ${localStorage.getItem("accessToken")}`,
-					},
-				}
-			);
-			const { title } = res.data;
-
-			const intRes = await axios.get(`http://localhost:4000/interactions?id=${id}`, {
+			const interactions = await axios.get(`http://localhost:4000/interaction?id=${id}`, {
 				headers: {
-					Authorisation: `Bearer ${localStorage.getItem("accessToken")}`,
+					Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
 				},
 			});
-			const intData = intRes.data;
-			setComments(intData.comments);
-			setLikes(intData.likes);
-			setRatings(intData.ratings);
-			setRecipeTitle(title);
-			setUserName(username);
+			setComments(interactions.data.comments);
+			setLikes(interactions.data.likes);
+			setRatings(interactions.data.ratings);
 			setIsLoading(false);
 			return;
 		};
@@ -70,7 +52,7 @@ const PostCard = (props) => {
 			{!isLoading && <><div className="postuser-info">
 				<div className="postuser-name">
 					<img src={userPost} width={30}></img>
-					<p className="postuser-name">{userName}</p>
+					<p className="postuser-name">{username}</p>
 				</div>
 				<img src={arrow} width={15} className="postarrow" onClick={handleRecipeClick}></img>
 			</div>
@@ -78,7 +60,7 @@ const PostCard = (props) => {
 				<img src={mealLogo}></img>
 			</div>
 			<div className="postuser-title">
-				{recipeTitle}
+				{title}
 			</div>
 			<div className="recipe-caption">
 				<img src={editLogo} width={30}></img>
