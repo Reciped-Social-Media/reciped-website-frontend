@@ -223,11 +223,6 @@ const Login = () => {
 export default Login;
 
 export const action = async ({ request }) => {
-	await new Promise((resolve) => {
-		setTimeout(() => {
-			resolve();
-		}, 1000);
-	});
 	const searchParams = new URL(request.url).searchParams;
 	const mode = searchParams.get("mode") || "signup";
 	const data = await request.formData();
@@ -238,7 +233,6 @@ export const action = async ({ request }) => {
 		password: data.get("password"),
 	};
 	const res = await axios.post(`http://localhost:4000/account/${mode}`, authData);
-	console.log(res);
 
 	if (res.data.error) {
 		return res;

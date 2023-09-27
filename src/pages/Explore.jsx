@@ -2,7 +2,6 @@ import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import "./Explore.css";
 import PostTopBar from "../components/Post/PostTopBar";
-import PostCard from "../components/Post/PostCard";
 import PostRow from "../components/Post/PostRow";
 import fireIcon from "../assets/icons/Fire.svg";
 import checkIcon from "../assets/icons/Check.svg";
@@ -14,12 +13,14 @@ const Explore = () => {
 	const username = localStorage.getItem("username");
 	const categories = ["All", "Breakfast", "Lunch", "Dinner"];
 	const [showRecipeId, setShowRecipeId] = useState(null);
+	const [postId, setPostId] = useState(null);
 	const [recipeInteractionData, setRecipeInteractionData] = useState({});
 	const [showRecipeModal, setShowRecipeModal] = useState(false);
 
 
 	const handleRecipeClick = () => {
 		setShowRecipeModal(prev => !prev);
+		console.log("IN EXPLORE");
 	};
 	const addRecipeHandler = async () => {
 		// const searchParams = new URL(window.location.href).searchParams;
@@ -33,7 +34,7 @@ const Explore = () => {
 			{ recipeId, category },
 			{
 				headers: {
-					Authorisation: `Bearer ${accessToken}`,
+					Authorization: `Bearer ${accessToken}`,
 				},
 			}
 		);
@@ -48,6 +49,7 @@ const Explore = () => {
 					title="WHATS HOT"
 					icon={fireIcon}
 					setRecipeId={setShowRecipeId}
+					setPostId={setPostId}
 					setRecipeData={setRecipeInteractionData}
 					handleRecipeClick ={handleRecipeClick}
 				/>
@@ -56,6 +58,7 @@ const Explore = () => {
 					title="OUR PICKS"
 					icon={checkIcon}
 					setRecipeId={setShowRecipeId}
+					setPostId={setPostId}
 					setRecipeData={setRecipeInteractionData}
 					handleRecipeClick ={handleRecipeClick}
 				/>
@@ -66,12 +69,13 @@ const Explore = () => {
 						<div className="RecipeCard__Modal">
 							<Recipe
 								id={showRecipeId}
+								postId={postId}
 								interactions={{
 									comments: recipeInteractionData.comments,
 									ratings: recipeInteractionData.ratings,
 									likes: recipeInteractionData.likes,
 									category: recipeInteractionData.category,
-									username: recipeInteractionData.userName,
+									username: recipeInteractionData.username,
 								}}
 								handleRecipeClick={handleRecipeClick}
 							/>

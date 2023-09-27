@@ -23,6 +23,7 @@ const PostCard = (props) => {
 
 	const handleRecipeClick = () => {
 		props.setRecipeId(recipeId);
+		props.setPostId(id);
 		props.setRecipeData({ comments, likes, ratings, username, category });
 		props.handleRecipeClick();
 	};

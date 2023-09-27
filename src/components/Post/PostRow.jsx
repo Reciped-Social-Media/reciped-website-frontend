@@ -28,7 +28,7 @@ const PostRow = (props) => {
 				<div className="row-container" style={{ transform: transformValue }}>
 					<div className="post-card-row">
 						{props.recipes.map((post) => (
-							<PostCard postDetails={post} setRecipeId={props.setRecipeId} setRecipeData={props.setRecipeData} handleRecipeClick={props.handleRecipeClick}/>
+							<PostCard postDetails={post} setRecipeId={props.setRecipeId} setRecipeData={props.setRecipeData} handleRecipeClick={props.handleRecipeClick} setPostId={props.setPostId}/>
 						))}
 					</div>
 				</div>

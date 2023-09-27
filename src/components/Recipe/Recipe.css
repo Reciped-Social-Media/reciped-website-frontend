@@ -92,7 +92,7 @@ ol {
 
 .Recipe__interactions {
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
   margin-top: 20px;
   border-top: 2px solid #6c9eba;
   padding-top: 10px;
@@ -104,14 +104,24 @@ ol {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-right: 3%;
+}
+
+.Recipe__likes > h1 {
+  margin-right: 5px;
 }
 
 .Recipe__ratings {
-  margin-left: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-right: 12%;
   width: 30%;
+}
+
+.Recipe__comments {
+  display: flex;
+  flex-direction: column;
 }
 
 .Recipe__ratings > h1 {
@@ -136,12 +146,15 @@ ol {
 	flex-direction: row;
 	justify-content: left;
 	align-items: center;
+  width: 100%;
 }
 
 .Recipe__comment__single > p {
 	margin-left: 20px;
 	font-size: 1.2rem;
 }
+
+
 
 .Add-recipe {
 	display: flex;

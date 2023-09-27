@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "./Recipe.css";
 import foodIcon from "../../assets/icons/food-dinner-icon.svg";
 import saltIcon from "../../assets/icons/salt.svg";
@@ -11,29 +11,18 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import starIcon from "../../assets/stars/empty.svg";
 import chatIcon from "../../assets/icons/Chat.svg";
 import { Rating } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import userIcon from "../../assets/icons/userMain.svg";
-
-const theme = createTheme({
-	palette: {
-		primary: {
-			main: "#6c9eba",
-		},
-	},
-});
+import { Alert } from "../Alert";
 
 const RedSwitch = styled(Switch)(() => ({
 	"& .MuiSwitch-switchBase.Mui-checked": {
@@ -56,9 +45,45 @@ const ColorButton = styled(Button)(() => ({
 	},
 }));
 
-const Recipe = ({ id, interactions, handleRecipeClick }) => {
+const initialReview = {
+	isLiked: false,
+	rating: 1,
+	comment: "",
+};
+
+const reviewReducer = (state, action) => {
+	switch (action.type) {
+	case "LIKE":
+		return {
+			isLiked: !state.isLiked,
+			rating: state.rating,
+			comment: state.comment,
+		};
+	case "COMMENT":
+		return {
+			isLiked: state.isLiked,
+			rating: state.rating,
+			comment: action.value,
+		};
+	case "RATE":
+		return {
+			isLiked: state.isLiked,
+			rating: action.value,
+			comment: state.comment,
+		};
+	}
+
+	return initialReview;
+};
+
+// Constants
+
+const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 	const [recipe, setRecipe] = useState(null);
-	const username = localStorage.getItem("username");
+	const [reviewState, dispatch] = useReducer(reviewReducer, initialReview);
+	const accessToken = localStorage.getItem("accessToken");
+	const headers = { Authorization: `Bearer ${accessToken}` };
+	const url = "http://localhost:4000";
 	let comments = [];
 	let likes = [];
 	let ratings = [];
@@ -71,42 +96,58 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 		postUsername = interactions.username;
 		category = interactions.category;
 	}
-	console.log(ratings);
 	const [addCategory, setAddCategory] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [isAdded, setIsAdded] = useState(false);
-	const [isLiked, setIsLiked] = useState(false);
-	const [postRating, setPostRating] = useState(null);
+	const [isReviewed, setIsReviewed] = useState(false);
 
 	const handleAddRecipe = async () => {
 		setIsLoading(true);
-		const accessToken = localStorage.getItem("accessToken");
 		const res = await axios.post(
-			"http://localhost:4000/cookbook/add",
+			url + "/cookbook/add",
 			{ recipeId: id, category },
-			{
-				headers: {
-					Authorisation: `Bearer ${accessToken}`,
-				},
-			}
+			{ headers }
 		);
-		console.log(res);
+		console.log("BACK");
+		setIsLoading(false);
 		if (res.data.error) {
 			setIsAdded(true);
 			setIsSuccess(false);
-			setIsLoading(false);
 			return;
 		}
-		if (res.status === 200 && !res.data.error) {
-			setIsLoading(false);
+		if (res.status === 200) {
 			setIsSuccess(true);
 			setIsAdded(true);
-			await new Promise((resolve) => {
-				setTimeout(() => {
-					resolve();
-				}, 3000);
-			});
+			handleRecipeClick();
+		}
+		console.log("DONE!");
+	};
+
+	const handleAddReview = async () => {
+		setIsLoading(true);
+		const likeresponse = await axios.post(
+			url + "/interaction/like",
+			{ postId },
+			{ headers }
+		);
+		const reviewresponse = await axios.post(
+			url + "/interaction/review",
+			{ postId, rating: reviewState.rating, comment: reviewState.comment },
+			{ headers }
+		);
+		setIsLoading(false);
+		console.log(likeresponse.data);
+		console.log(reviewresponse.data);
+		if (likeresponse.data.error || reviewresponse.data.error) {
+			setIsReviewed(true);
+			setIsSuccess(false);
+			handleRecipeClick();
+			return;
+		}
+		if (likeresponse.status === 200 && reviewresponse.status === 200) {
+			setIsSuccess(true);
+			setIsReviewed(true);
 			handleRecipeClick();
 		}
 	};
@@ -121,16 +162,14 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 				setRecipe(null);
 			}
 			else {
-				const res = await axios.get(`http://localhost:4000/recipe?id=${id}`, {
-					headers: {
-						Authorisation: `Bearer ${localStorage.getItem("accessToken")}`,
-					},
+				const res = await axios.get(url + `/recipe?recipeId=${id}`, {
+					headers,
 				});
 				if (res.data.error) {
 					setRecipe(null);
 				}
 				else {
-					setRecipe(res.data);
+					setRecipe(res.data[0]);
 				}
 			}
 		};
@@ -153,11 +192,17 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 			)}
 			{recipe && !isLoading && !isAdded && (
 				<div>
-					{interactions && <div className="post-userinfo">
-						<div className="userdetails"><img src={userIcon}></img>
-							<h1>{`Posted by: ${postUsername}`}</h1></div>
-						<div className="category"><h1>Category: {category}</h1></div>
-					</div>}
+					{interactions && (
+						<div className="post-userinfo">
+							<div className="userdetails">
+								<img src={userIcon}></img>
+								<h1>{`Posted by: ${postUsername}`}</h1>
+							</div>
+							<div className="category">
+								<h1>Category: {category}</h1>
+							</div>
+						</div>
+					)}
 					<div className="Recipe__title">
 						<img src={foodIcon} className="Recipe_icon"></img>
 						<h1>{recipe.title}</h1>
@@ -201,14 +246,14 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 									<FavoriteIcon sx={{ bgcolor: "transparent", color: "red" }} />
 									<h1>Liked by:</h1>
 									<AvatarGroup total={likes.length}>
-										{likes.slice(0, 3).map((like, index) => (
+										{likes.slice(0, 2).map((like, index) => (
 											<Avatar
 												sx={{
 													bgcolor:
-                            index % 2 === 0 ? "rgba(108, 158, 186)" : "white",
+                            index % 2 === 0 ? "rgba(108, 158, 186)" : "grey",
 												}}
 											>
-												{like.username[0].toUpperCase()}
+												{like[0].toUpperCase()}
 											</Avatar>
 										))}
 									</AvatarGroup>
@@ -219,7 +264,7 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 									<Rating name="read-only" value={3} readOnly />
 									<h1>By</h1>
 									<AvatarGroup total={ratings.length}>
-										{ratings.map((rating, index) => (
+										{ratings.slice(0, 2).map((rating, index) => (
 											<Avatar
 												sx={{
 													bgcolor:
@@ -233,7 +278,7 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 									</AvatarGroup>
 								</div>
 								<div className="Add-recipe">
-									<h1 style={{ marginRight: 10 }}>Save for later:  </h1>
+									<h1 style={{ marginRight: 10 }}>Save for later: </h1>
 									<FormControl>
 										<InputLabel id="demo-simple-select-label">
                       Category
@@ -250,7 +295,7 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 												InputLabel: {
 													color: "white",
 												},
-												":-ms-input-placeholder" : {
+												":-ms-input-placeholder": {
 													color: "white",
 													outline: "none",
 												},
@@ -269,22 +314,38 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 										sx={{ marginLeft: 5 }}
 										onClick={handleAddRecipe}
 									>
-                  Add
+                    Add
 									</ColorButton>
 								</div>
 							</div>
 							<div className="interact-action">
-								<span className="like"><h1>Like:</h1>
-									<RedSwitch /></span>
-								<span className="inner"><h1>Rate:</h1>
-									<Rating /></span>
+								<span className="like">
+									<h1>Like:</h1>
+									<RedSwitch onChange={() => dispatch({ type: "LIKE" })} />
+								</span>
+								<span className="inner">
+									<h1>Rate:</h1>
+									<Rating
+										onChange={(event, newValue) =>
+											dispatch({ type: "RATE", value: newValue })
+										}
+									/>
+								</span>
 								<span className="comment">
 									<h1>Comment :</h1>
-									<input type="text" placeholder="add a comment..."></input></span>
+									<input
+										type="text"
+										placeholder="add a comment..."
+										onChange={(e) =>
+											dispatch({ type: "COMMENT", value: e.target.value })
+										}
+									></input>
+								</span>
 								<ColorButton
 									variant="contained"
 									endIcon={<SendIcon />}
 									sx={{ marginLeft: 5 }}
+									onClick={handleAddReview}
 								>
                   Submit
 								</ColorButton>
@@ -294,58 +355,55 @@ const Recipe = ({ id, interactions, handleRecipeClick }) => {
 									<img src={chatIcon}></img>
 									<h1>Comments:</h1>
 								</div>
-								<div className="Recipe__comment__single">
-									{comments.map((com, index) => (
-										<>
-											<span>
-												<Avatar
-													sx={{
-														bgcolor:
-                              index % 2 === 0 ? "rgba(108, 158, 186)" : "white",
-													}}
-												>
-													{com.username[0].toUpperCase()}
-												</Avatar>
-											</span>
-											<p>{com.username}</p>
-											<p>:</p>
-											<p>{com.comment}</p>
-										</>
-									))}
-								</div>
+								{comments.map((com, index) => (
+									<div className="Recipe__comment__single">
+										<Avatar
+											sx={{
+												bgcolor:
+                              index % 2 === 0 ? "rgba(108, 158, 186)" : "grey",
+											}}
+										>
+											{com.username[0].toUpperCase()}
+										</Avatar>
+										<p>{com.username}</p>
+										<p>:</p>
+										<p>{com.comment}</p>
+										<br></br>
+									</div>
+								))}
 							</div>
 						</>
 					)}
 				</div>
 			)}
-			{isLoading && !isSuccess && <Loader />}
+			{isLoading && !isSuccess && <div className="loader"><Loader /></div>}
 			{isSuccess && isAdded && (
-				<ThemeProvider theme={theme}>
-					<Alert
-						severity="success"
-						variant="filled"
-						color="primary"
-						sx={{ color: "white" }}
-					>
-						<AlertTitle>Success</AlertTitle>
-            Successfully added to your cookbook —{" "}
-						<strong>Go check it out!</strong>
-					</Alert>
-				</ThemeProvider>
+				<Alert
+					title={"Success!"}
+					caption={"Successfully added to your cookbook"}
+					severity={"success"}
+				/>
 			)}
 			{!isSuccess && isAdded && (
-				<ThemeProvider theme={theme}>
-					<Alert
-						severity="error"
-						variant="filled"
-						color="primary"
-						sx={{ color: "white" }}
-					>
-						<AlertTitle>Error</AlertTitle>
-            You already have this in your cookbook —{" "}
-						<strong>Go check it out!</strong>
-					</Alert>
-				</ThemeProvider>
+				<Alert
+					title={"Error"}
+					caption={"You already have this in your cookbook"}
+					severity={"error"}
+				/>
+			)}
+			{isSuccess && isReviewed && (
+				<Alert
+					title={"Success!"}
+					caption={"Successfully reviewed this recipe"}
+					severity={"success"}
+				/>
+			)}
+			{!isSuccess && isReviewed && (
+				<Alert
+					title={"Error"}
+					caption={"You have already review this recipe"}
+					severity={"error"}
+				/>
 			)}
 		</div>
 	);

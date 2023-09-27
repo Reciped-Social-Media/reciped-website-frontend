@@ -3,13 +3,6 @@ import { redirect } from "react-router-dom";
 
 export async function pageLoader(route) {
 	const currentUrl = window.location.href;
-	if (!currentUrl.includes("cookbook")) {
-		await new Promise((resolve) => {
-			setTimeout(() => {
-				resolve();
-			}, 500);
-		});
-	}
 	let accessToken = localStorage.getItem("accessToken");
 	const res = await axios.get(`http://localhost:4000/${route}`, {
 		headers: {
