@@ -8,18 +8,18 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    margin-top: 20px;
+    margin-top: 1rem;
 }
 
 .action-buttons {
 	display: flex;
 	flex-direction: row;
-	position: fixed;
-	left: 0;
+	/* position: fixed; */
+	/* left: 0;
 	right: 0;
-	bottom: 0;
-	padding-right: 4rem;
-	padding-bottom: 4rem;
-	padding-left: calc(4rem + 250px);
+	top: 20; */
+	/* padding-right: 4rem; */
+	/* padding-left: calc(4rem + 250px); */
     justify-content: space-between;
+
 }

@@ -1,0 +1,52 @@
+.recipe-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 8%;
+    justify-content: space-evenly;
+}
+
+.recipe-result {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #6c9eba;
+    border-radius: 20px;
+    margin-top: 10px;
+    width: 45%;
+    height: 10%;
+    cursor: pointer;
+    box-shadow: 0 0 2px 0px black;
+}
+
+.recipe-result:hover {
+    background-color: rgb(108, 158, 186, 0.6);
+}
+
+.recipe-result:hover > h3 {
+    color: white;
+}
+
+.recipe-result > img {
+    width: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.recipe-result > h3 {
+    color: #6c9eba;
+    cursor: pointer;
+}
+
+.search-title{
+    color: #6c9eba;
+    margin-left: 30%;
+    display: flex;
+}
+
+.search-title > h1 {
+    margin-left: 10px;
+}
+

@@ -28,8 +28,7 @@ const StyledSwitch = styled(Switch)({
 
 
 const RecipeCard = (props) => {
-
-	const { title, id, isPublic, category } = props.recipe;
+	const { title, recipeId, isPublic, category } = props.recipe;
 	const [checked, setChecked] = useState(isPublic);
 	const [showRecipeModal, setShowRecipeModal] = useState(false);
 	const [showPostModal, setShowPostModal] = useState(false);
@@ -37,7 +36,7 @@ const RecipeCard = (props) => {
 	const handleCheck = (event) => {
 		const isChecked = event.target.checked;
 		const accessToken = localStorage.getItem("accessToken");
-		axios.post("http://localhost:4000/cookbook/toggle-public", { checked: isChecked, recipeId: id }, {
+		axios.post("http://localhost:4000/cookbook/toggle-public", { checked: isChecked, recipeId }, {
 			headers: {
 				Authorisation: `Bearer ${accessToken}`,
 			},
@@ -74,7 +73,7 @@ const RecipeCard = (props) => {
 					<>
 						<div className="RecipeCard__Blur" onClick={handleRecipeClick}/>
 						<div className="RecipeCard__Modal">
-							<Recipe id={id} />
+							<Recipe recipeId={recipeId} cookbook={true}/>
 						</div>
 					</>
 				)

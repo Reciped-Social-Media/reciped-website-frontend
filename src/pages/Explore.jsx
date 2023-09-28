@@ -12,6 +12,9 @@ import pizzaIcon from "../assets/icons/Pizza.svg";
 import moonIcon from "../assets/icons/Moon.svg";
 import { useState } from "react";
 import Recipe from "../components/Recipe/Recipe";
+import Search from "../components/Search/Search";
+import Loader from "../components/Loader/Loader";
+import searchIcon from "../assets/icons/SearchBlue.svg";
 
 const Explore = () => {
 	const data = useLoaderData();
@@ -24,40 +27,24 @@ const Explore = () => {
 	const dinner = posts.filter(rec => rec.category === "Dinner");
 	const dessert = posts.filter(rec => rec.category === "Dessert");
 	const username = localStorage.getItem("username");
-	const categories = ["All", "Breakfast", "Lunch", "Dinner", "Dessert"];
 
 	const [showRecipeId, setShowRecipeId] = useState(null);
 	const [postId, setPostId] = useState(null);
 	const [recipeInteractionData, setRecipeInteractionData] = useState({});
 	const [showRecipeModal, setShowRecipeModal] = useState(false);
+	const [searchResult, setSearchResult] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
 
 
 	const handleRecipeClick = () => {
 		setShowRecipeModal(prev => !prev);
 	};
-	const addRecipeHandler = async () => {
-		// const searchParams = new URL(window.location.href).searchParams;
-		// const recipeId = searchParams.get("id");
-		const recipeId = Math.floor(Math.random() * 1000);
-		const cat = Math.floor(Math.random() * 3);
-		const category = categories[cat];
-		const accessToken = localStorage.getItem("accessToken");
-		await axios.post(
-			"http://localhost:4000/cookbook/add",
-			{ recipeId, category },
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
-	};
 
 	return (
 		<div className="explore-background">
 			<div className="explore-content">
-				<PostTopBar username={username} />
-				<PostRow
+				<PostTopBar username={username} setSearchResult={setSearchResult} setIsLoading={setIsLoading}/>
+				{!searchResult && !isLoading && <><PostRow
 					recipes={whatsHot}
 					title="WHATS HOT"
 					icon={fireIcon}
@@ -119,14 +106,15 @@ const Explore = () => {
 					setPostId={setPostId}
 					setRecipeData={setRecipeInteractionData}
 					handleRecipeClick ={handleRecipeClick}
-				/>
-				<button onClick={addRecipeHandler}>ADD TO COOKBOOK</button>
+				/></>}
+				{searchResult && !isLoading && <Search recipes={searchResult} setRecipeId={setShowRecipeId} handleRecipeClick={handleRecipeClick} setPostId={setPostId}/>}
+				{isLoading && <div className="search-wait"><div className="search-wait-title"><img src={searchIcon} width={30}></img><h1>Let's have a look...</h1></div><div className="loader"><Loader/></div></div>}
 				{showRecipeModal && (
 					<>
 						<div className="RecipeCard__Blur" onClick={handleRecipeClick} />
 						<div className="RecipeCard__Modal">
 							<Recipe
-								id={showRecipeId}
+								recipeId={showRecipeId}
 								postId={postId}
 								interactions={{
 									comments: recipeInteractionData.comments,

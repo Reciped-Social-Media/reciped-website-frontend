@@ -78,7 +78,7 @@ const reviewReducer = (state, action) => {
 
 // Constants
 
-const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
+const Recipe = ({ recipeId, interactions, handleRecipeClick, postId, cookbook }) => {
 	const [recipe, setRecipe] = useState(null);
 	const [reviewState, dispatch] = useReducer(reviewReducer, initialReview);
 	const accessToken = localStorage.getItem("accessToken");
@@ -89,7 +89,6 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 	let ratings = [];
 	let postUsername = "";
 	let category = "";
-	console.log(interactions);
 	if (interactions) {
 		comments = interactions.comments;
 		likes = interactions.likes;
@@ -107,10 +106,9 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 		setIsLoading(true);
 		const res = await axios.post(
 			url + "/cookbook/add",
-			{ recipeId: id, category },
+			{ recipeId, category: addCategory },
 			{ headers }
 		);
-		console.log("BACK");
 		setIsLoading(false);
 		if (res.data.error) {
 			setIsAdded(true);
@@ -122,7 +120,6 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 			setIsAdded(true);
 			handleRecipeClick();
 		}
-		console.log("DONE!");
 	};
 
 	const handleAddReview = async () => {
@@ -138,8 +135,6 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 			{ headers }
 		);
 		setIsLoading(false);
-		console.log(likeresponse.data);
-		console.log(reviewresponse.data);
 		if (likeresponse.data.error || reviewresponse.data.error) {
 			setIsReviewed(true);
 			setIsSuccess(false);
@@ -159,11 +154,11 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 
 	useEffect(() => {
 		const fetchRecipe = async () => {
-			if (!id) {
+			if (!recipeId) {
 				setRecipe(null);
 			}
 			else {
-				const res = await axios.get(url + `/recipe?recipeId=${id}`, {
+				const res = await axios.get(url + `/recipe?recipeId=${recipeId}`, {
 					headers,
 				});
 				if (res.data.error) {
@@ -174,7 +169,7 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 				}
 			}
 		};
-		if (!id) {
+		if (!recipeId) {
 			setRecipe(null);
 		}
 		else {
@@ -193,7 +188,48 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 			)}
 			{recipe && !isLoading && !isAdded && (
 				<div>
-					{interactions && (
+					{!cookbook && <div className="Add-recipe">
+						<h1 style={{ marginRight: 10 }}>Save for later: </h1>
+						<FormControl>
+							<InputLabel id="demo-simple-select-label">
+                      Category
+							</InputLabel>
+							<Select
+								value={addCategory}
+								label="Category"
+								onChange={handleCategoryChange}
+								sx={{
+									width: "100px",
+									color: "#6c9eba",
+									outline: "none",
+									backgroundColor: "transparent",
+									InputLabel: {
+										color: "white",
+									},
+									":-ms-input-placeholder": {
+										color: "white",
+										outline: "none",
+									},
+								}}
+								size="small"
+							>
+								<MenuItem value={"Breakfast"}>Breakfast</MenuItem>
+								<MenuItem value={"Lunch"}>Lunch</MenuItem>
+								<MenuItem value={"Dinner"}>Dinner</MenuItem>
+								<MenuItem value={"Dessert"}>Dessert</MenuItem>
+								<MenuItem value={"All"}>All</MenuItem>
+							</Select>
+						</FormControl>
+						<ColorButton
+							variant="contained"
+							endIcon={<AddBoxIcon />}
+							sx={{ marginLeft: 5 }}
+							onClick={handleAddRecipe}
+						>
+                    Add
+						</ColorButton>
+					</div>}
+					{interactions && postId && (
 						<div className="post-userinfo">
 							<div className="userdetails">
 								<img src={userIcon}></img>
@@ -277,47 +313,6 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 											</Avatar>
 										))}
 									</AvatarGroup>
-								</div>
-								<div className="Add-recipe">
-									<h1 style={{ marginRight: 10 }}>Save for later: </h1>
-									<FormControl>
-										<InputLabel id="demo-simple-select-label">
-                      Category
-										</InputLabel>
-										<Select
-											value={addCategory}
-											label="Category"
-											onChange={handleCategoryChange}
-											sx={{
-												width: "100px",
-												color: "#6c9eba",
-												outline: "none",
-												backgroundColor: "transparent",
-												InputLabel: {
-													color: "white",
-												},
-												":-ms-input-placeholder": {
-													color: "white",
-													outline: "none",
-												},
-											}}
-											size="small"
-										>
-											<MenuItem value={"Breakfast"}>Breakfast</MenuItem>
-											<MenuItem value={"Lunch"}>Lunch</MenuItem>
-											<MenuItem value={"Dinner"}>Dinner</MenuItem>
-											<MenuItem value={"Dessert"}>Dessert</MenuItem>
-											<MenuItem value={"All"}>All</MenuItem>
-										</Select>
-									</FormControl>
-									<ColorButton
-										variant="contained"
-										endIcon={<AddBoxIcon />}
-										sx={{ marginLeft: 5 }}
-										onClick={handleAddRecipe}
-									>
-                    Add
-									</ColorButton>
 								</div>
 							</div>
 							<div className="interact-action">
