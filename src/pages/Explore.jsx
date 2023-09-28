@@ -5,13 +5,27 @@ import PostTopBar from "../components/Post/PostTopBar";
 import PostRow from "../components/Post/PostRow";
 import fireIcon from "../assets/icons/Fire.svg";
 import checkIcon from "../assets/icons/Check.svg";
+import clockIcon from "../assets/icons/clock.svg";
+import dessertIcon from "../assets/icons/iceCream.svg";
+import sunIcon from "../assets/icons/Sun.svg";
+import pizzaIcon from "../assets/icons/Pizza.svg";
+import moonIcon from "../assets/icons/Moon.svg";
 import { useState } from "react";
 import Recipe from "../components/Recipe/Recipe";
 
 const Explore = () => {
 	const data = useLoaderData();
+	console.log(data);
+	const posts = data.post;
+	const justIn = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 10);
+	const whatsHot = posts.filter(rec => rec.rating >= 4);
+	const breakfast = posts.filter(rec => rec.category === "Breakfast");
+	const lunch = posts.filter(rec => rec.category === "Lunch");
+	const dinner = posts.filter(rec => rec.category === "Dinner");
+	const dessert = posts.filter(rec => rec.category === "Dessert");
+	console.log(dessert);
 	const username = localStorage.getItem("username");
-	const categories = ["All", "Breakfast", "Lunch", "Dinner"];
+	const categories = ["All", "Breakfast", "Lunch", "Dinner", "Dessert"];
 	const [showRecipeId, setShowRecipeId] = useState(null);
 	const [postId, setPostId] = useState(null);
 	const [recipeInteractionData, setRecipeInteractionData] = useState({});
@@ -45,7 +59,7 @@ const Explore = () => {
 			<div className="explore-content">
 				<PostTopBar username={username} />
 				<PostRow
-					recipes={data}
+					recipes={whatsHot}
 					title="WHATS HOT"
 					icon={fireIcon}
 					setRecipeId={setShowRecipeId}
@@ -54,9 +68,54 @@ const Explore = () => {
 					handleRecipeClick ={handleRecipeClick}
 				/>
 				<PostRow
-					recipes={data}
+					recipes={justIn}
+					title="JUST IN"
+					icon={clockIcon}
+					setRecipeId={setShowRecipeId}
+					setPostId={setPostId}
+					setRecipeData={setRecipeInteractionData}
+					handleRecipeClick ={handleRecipeClick}
+				/>
+				<PostRow
+					recipes={posts}
 					title="OUR PICKS"
 					icon={checkIcon}
+					setRecipeId={setShowRecipeId}
+					setPostId={setPostId}
+					setRecipeData={setRecipeInteractionData}
+					handleRecipeClick ={handleRecipeClick}
+				/>
+				<PostRow
+					recipes={breakfast}
+					title="BREAKFAST"
+					icon={sunIcon}
+					setRecipeId={setShowRecipeId}
+					setPostId={setPostId}
+					setRecipeData={setRecipeInteractionData}
+					handleRecipeClick ={handleRecipeClick}
+				/>
+				<PostRow
+					recipes={lunch}
+					title="LUNCH"
+					icon={pizzaIcon}
+					setRecipeId={setShowRecipeId}
+					setPostId={setPostId}
+					setRecipeData={setRecipeInteractionData}
+					handleRecipeClick ={handleRecipeClick}
+				/>
+				<PostRow
+					recipes={dinner}
+					title="DINNER"
+					icon={moonIcon}
+					setRecipeId={setShowRecipeId}
+					setPostId={setPostId}
+					setRecipeData={setRecipeInteractionData}
+					handleRecipeClick ={handleRecipeClick}
+				/>
+				<PostRow
+					recipes={dessert}
+					title="DESSERT"
+					icon={dessertIcon}
 					setRecipeId={setShowRecipeId}
 					setPostId={setPostId}
 					setRecipeData={setRecipeInteractionData}

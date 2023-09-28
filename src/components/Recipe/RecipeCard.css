@@ -14,7 +14,7 @@
 }
 
 .card-content:hover {
-	box-shadow: 0px 0px 25px rgba(108, 158, 186);
+	box-shadow: 0px 0px 25px #6c9eba;
 }
 .recipe-icon {
 	margin-bottom: 10px;

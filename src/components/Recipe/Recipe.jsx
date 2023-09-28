@@ -165,7 +165,6 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 				const res = await axios.get(url + `/recipe?recipeId=${id}`, {
 					headers,
 				});
-				console.log(res);
 				if (res.data.error) {
 					setRecipe(null);
 				}
@@ -306,6 +305,7 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 											<MenuItem value={"Breakfast"}>Breakfast</MenuItem>
 											<MenuItem value={"Lunch"}>Lunch</MenuItem>
 											<MenuItem value={"Dinner"}>Dinner</MenuItem>
+											<MenuItem value={"Dessert"}>Dessert</MenuItem>
 											<MenuItem value={"All"}>All</MenuItem>
 										</Select>
 									</FormControl>

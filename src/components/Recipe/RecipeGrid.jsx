@@ -7,6 +7,7 @@ import WbTwilightIcon from "@mui/icons-material/WbTwilight";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import CakeIcon from "@mui/icons-material/Cake";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
@@ -16,6 +17,7 @@ const actions = [
 	{ icon: <WbTwilightIcon />, name: "Breakfast" },
 	{ icon: <LunchDiningIcon />, name: "Lunch" },
 	{ icon: <DarkModeIcon />, name: "Dinner" },
+	{ icon: <CakeIcon/>, name: "Dessert" },
 	{ icon: <QuestionMarkIcon />, name: "All" },
 ];
 
