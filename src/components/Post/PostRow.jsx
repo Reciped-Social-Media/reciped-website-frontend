@@ -18,6 +18,7 @@ const PostRow = (props) => {
 	const transformValue = `translateX(${
 		scrollPosition * -350
 	}px)`;
+
 	return (
 		<>
 			<div className="postrow-content">
@@ -28,7 +29,7 @@ const PostRow = (props) => {
 				<div className="row-container" style={{ transform: transformValue }}>
 					<div className="post-card-row">
 						{props.recipes.map((post) => (
-							<PostCard postDetails={post} setRecipeId={props.setRecipeId} setRecipeData={props.setRecipeData} handleRecipeClick={props.handleRecipeClick} setPostId={props.setPostId}/>
+							<PostCard postDetails={post} setRecipeId={props.setRecipeId} setRecipeData={props.setRecipeData} handleRecipeClick={props.handleRecipeClick} setPostId={props.setPostId} />
 						))}
 					</div>
 				</div>

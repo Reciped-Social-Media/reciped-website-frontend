@@ -89,6 +89,7 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 	let ratings = [];
 	let postUsername = "";
 	let category = "";
+	console.log(interactions);
 	if (interactions) {
 		comments = interactions.comments;
 		likes = interactions.likes;
@@ -239,7 +240,7 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 						</div>
 					</div>
 
-					{interactions && (
+					{interactions && postId && (
 						<>
 							<div className="Recipe__interactions">
 								<div className="Recipe__likes">

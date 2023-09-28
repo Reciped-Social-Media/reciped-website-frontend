@@ -22,27 +22,33 @@ const PostCard = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleRecipeClick = () => {
-		props.setRecipeId(recipeId);
 		props.setPostId(id);
+		props.setRecipeId(recipeId);
 		props.setRecipeData({ comments, likes, ratings, username, category });
 		props.handleRecipeClick();
 	};
 
 	useEffect(() => {
 		setIsLoading(true);
-		const fetch = async () => {
-			const interactions = await axios.get(`http://localhost:4000/interaction?id=${id}`, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-				},
-			});
-			setComments(interactions.data.comments);
-			setLikes(interactions.data.likes);
-			setRatings(interactions.data.ratings);
+		if (id) {
+			const fetch = async () => {
+				const interactions = await axios.get(`http://localhost:4000/interaction?id=${id}`, {
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+					},
+				});
+				setComments(interactions.data.comments);
+				setLikes(interactions.data.likes);
+				setRatings(interactions.data.ratings);
+				setIsLoading(false);
+				return;
+			};
+			fetch();
+		}
+		else {
 			setIsLoading(false);
-			return;
-		};
-		fetch();
+			setRatings([{ rating: props.postDetails.rating }]);
+		}
 	}, []);
 
 	const rating = ratings.map(rat => rat.rating);

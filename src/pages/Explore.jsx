@@ -15,17 +15,17 @@ import Recipe from "../components/Recipe/Recipe";
 
 const Explore = () => {
 	const data = useLoaderData();
-	console.log(data);
-	const posts = data.post;
+	const posts = data.posts;
+	const picks = data.picks;
 	const justIn = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 10);
 	const whatsHot = posts.filter(rec => rec.rating >= 4);
 	const breakfast = posts.filter(rec => rec.category === "Breakfast");
 	const lunch = posts.filter(rec => rec.category === "Lunch");
 	const dinner = posts.filter(rec => rec.category === "Dinner");
 	const dessert = posts.filter(rec => rec.category === "Dessert");
-	console.log(dessert);
 	const username = localStorage.getItem("username");
 	const categories = ["All", "Breakfast", "Lunch", "Dinner", "Dessert"];
+
 	const [showRecipeId, setShowRecipeId] = useState(null);
 	const [postId, setPostId] = useState(null);
 	const [recipeInteractionData, setRecipeInteractionData] = useState({});
@@ -34,7 +34,6 @@ const Explore = () => {
 
 	const handleRecipeClick = () => {
 		setShowRecipeModal(prev => !prev);
-		console.log("IN EXPLORE");
 	};
 	const addRecipeHandler = async () => {
 		// const searchParams = new URL(window.location.href).searchParams;
@@ -77,7 +76,7 @@ const Explore = () => {
 					handleRecipeClick ={handleRecipeClick}
 				/>
 				<PostRow
-					recipes={posts}
+					recipes={picks}
 					title="OUR PICKS"
 					icon={checkIcon}
 					setRecipeId={setShowRecipeId}
