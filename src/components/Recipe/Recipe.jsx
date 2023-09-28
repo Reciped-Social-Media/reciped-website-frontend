@@ -165,11 +165,12 @@ const Recipe = ({ id, interactions, handleRecipeClick, postId }) => {
 				const res = await axios.get(url + `/recipe?recipeId=${id}`, {
 					headers,
 				});
+				console.log(res);
 				if (res.data.error) {
 					setRecipe(null);
 				}
 				else {
-					setRecipe(res.data[0]);
+					setRecipe(res.data);
 				}
 			}
 		};
