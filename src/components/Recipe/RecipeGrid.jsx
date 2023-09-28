@@ -50,6 +50,7 @@ const RecipeGrid = (props) => {
 					ariaLabel="SpeedDial basic example"
 					icon={<SpeedDialIcon icon={<AddIcon />}/>}
 					direction="right"
+					sx={{ zIndex: 1 }}
 				>
 					<SpeedDialAction
 						key={1}
@@ -62,6 +63,7 @@ const RecipeGrid = (props) => {
 					ariaLabel="SpeedDial basic example"
 					icon={<SpeedDialIcon icon={<FilterAltIcon />} />}
 					direction="left"
+					sx={{ zIndex: 1 }}
 				>
 					{actions.map((action) => (
 						<SpeedDialAction
