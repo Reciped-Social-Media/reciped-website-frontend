@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import axios from "axios";
 import "./Explore.css";
 import PostTopBar from "../components/Post/PostTopBar";
 import PostRow from "../components/Post/PostRow";
