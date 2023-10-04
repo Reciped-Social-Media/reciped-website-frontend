@@ -139,12 +139,14 @@ const Pantry = () => {
 		}
 	};
 
+	{searchResults === [] && <h3>Oops...can't find that</h3>;}
 	const fridgeData = data.filter(ing => ing.storage === "Fridge");
 	const freezerData = data.filter(ing => ing.storage === "Freezer");
 	const pantryData = data.filter(ing => ing.storage === "Pantry");
+	console.log("Results", searchResults, []);
 
 	return (
-		<div className="pantry-background">
+		<div className="pantry-background" onClick={() => setIsSearching(false)}>
 			<div className="pantry-filter-bar">
 				<div className="pantry-search-field">	<div className="pantry-add">
 					<div className="pantry-search-bar">
@@ -153,9 +155,10 @@ const Pantry = () => {
 					</div>
 					{isSearching && <div className="item-results">
 						<div className="list">
-							{searchResults && searchResults.map(item => (
+							{searchResults && Array.isArray(searchResults) && searchResults.map(item => (
 								<div className="ingredient-result" onClick={() => handleSelect(item.name, item.id)}><p>{item.name}</p><AddBoxIcon/></div>
 							))}
+							{typeof searchResults === "string" && <h3>Oops...can't find that</h3>}
 							{isLoading && <h3>Searching...</h3>}
 						</div>
 					</div>
