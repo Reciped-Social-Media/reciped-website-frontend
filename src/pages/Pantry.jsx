@@ -61,8 +61,8 @@ const Pantry = () => {
 	const [isAdding, setIsAdding] = useState(false);
 	const [isSearching, setIsSearching] = useState(false);
 	const [alertCaption, setAlertCaption] = useState("");
-	const [unit, setUnits] = useState("unit");
-	const [amount, setAmount] = useState("");
+	const [unit, setUnits] = useState("g");
+	const [amount, setAmount] = useState(null);
 	const [storage, setStorage] = useState("Fridge");
 
 	const handleUnitChange = (event) => {
@@ -162,6 +162,21 @@ const Pantry = () => {
 					}
 				</div>
 				<div className="units-add">
+					<input type="text" className="unit-value" placeholder="val" onChange={handleAmountChange} value={amount}></input>
+					<FormControl sx={{ minWidth: 70, boxShadow: "0 0 5px 0 black", marginRight: 2 }}>
+						<Select
+							value={unit}
+							id="unit"
+							onChange={handleUnitChange}
+							sx={{ backgroundColor: "#6c9eba", border: "2px solid white", color: "white", "&.Mui-focused": {
+								outline: "none",
+							} }}
+						>
+							<MenuItem value='pc'>pc</MenuItem>
+							<MenuItem value='g'>g</MenuItem>
+							<MenuItem value='ml'>ml</MenuItem>
+						</Select>
+					</FormControl>
 					<FormControl sx={{ minWidth: 70, boxShadow: "0 0 5px 0 black", marginRight: 1 }}>
 						<Select
 							value={storage}
@@ -176,25 +191,10 @@ const Pantry = () => {
 							<MenuItem value='Pantry'>Pantry</MenuItem>
 						</Select>
 					</FormControl>
-					<FormControl sx={{ minWidth: 70, boxShadow: "0 0 5px 0 black" }}>
-						<Select
-							value={unit}
-							id="unit"
-							onChange={handleUnitChange}
-							sx={{ backgroundColor: "#6c9eba", border: "2px solid white", color: "white", "&.Mui-focused": {
-								outline: "none",
-							} }}
-						>
-							<MenuItem value='unit'>unit</MenuItem>
-							<MenuItem value='pc'>pc</MenuItem>
-							<MenuItem value='g'>g</MenuItem>
-							<MenuItem value='ml'>ml</MenuItem>
-						</Select>
-					</FormControl>
-					<input type="text" className="unit-value" placeholder="value" onChange={handleAmountChange} value={amount}></input>
 					<ColorButton
 						endIcon={<AddBoxIcon />}
 						onClick={handleIngredientAdd}
+						disabled={!addIngredient || !amount}
 					>
 					</ColorButton>
 				</div></div>
