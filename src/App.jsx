@@ -27,7 +27,7 @@ const router = createBrowserRouter([
 					{ path: "chef", element: <Chef />, loader: () => pageLoader("chef") },
 					{ path: "list", element: <List />, loader: () => pageLoader("list") },
 					{ path: "pantry", element: <Pantry />, loader: () => pageLoader("pantry") },
-					{ path: "planner", element: <Planner />, loader: () => pageLoader("planner") },
+					{ path: "planner", element: <Planner />, loader: () => pageLoader("mealplan") },
 				],
 			},
 		],

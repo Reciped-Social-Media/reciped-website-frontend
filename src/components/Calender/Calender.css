@@ -1,0 +1,12 @@
+.cal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.cal-background {
+    background-color: #6c9eba;
+    border-radius: 20px;
+    box-shadow: 0 0 5px 0 black;
+}

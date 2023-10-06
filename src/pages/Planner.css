@@ -1,0 +1,121 @@
+.planner-background {
+    background-image: url('../assets/planner.jpg');
+    background-size: contain;
+    width: 100%;
+    height: 100vh;
+    padding-top: 2rem;
+}
+
+.planner-content {
+    z-index: 100;
+    width: 100%;
+    height: 100vh;
+}
+
+.day-grid {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-top: 50px;
+}
+
+.time-block {
+    border-left: 1px solid #6c9eba;
+    border-right: 1px solid #6c9eba;
+    width: 20%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(108, 158, 186, 0.5);
+    border-radius: 20px;
+    box-shadow: 0 0 5px 0 black;
+    padding-bottom: 6px;
+}
+
+.planner-username {
+    display: flex;
+    background-color: #6c9eba;
+    width: fit-content;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    right: 5%;
+    position: fixed;
+    color: white;
+}
+
+.planner-username > h2 {
+    margin-left: 10px;
+    font-size: 1.2rem;
+    cursor: default;
+}
+
+.time-block > h4 {
+    background-color: #6c9eba;
+    text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black; 
+    padding: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 90%;
+    height: 30px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    font-size: 1.5rem;
+    color: white;
+    border-radius: 20px 20px 0 0;
+    cursor: default;
+}
+
+.recipe-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+.rec-title {
+    color: white;
+    text-shadow:
+    -1px -1px 0 #6c9eba, /* Top left shadow */
+     1px -1px 0 #6c9eba, /* Top right shadow */
+    -1px  1px 0 #6c9eba, /* Bottom left shadow */
+     1px  1px 0 #6c9eba; /* Bottom right shadow */
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: default;
+}
+
+.rec-source {
+    color: white;
+    text-shadow:
+    -1px -1px 0 #6c9eba, /* Top left shadow */
+     1px -1px 0 #6c9eba, /* Top right shadow */
+    -1px  1px 0 #6c9eba, /* Bottom left shadow */
+     1px  1px 0 #6c9eba; /* Bottom right shadow */
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: auto;
+    cursor: default;
+}
+
+.add-recipe {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    margin-top: 40px;
+}

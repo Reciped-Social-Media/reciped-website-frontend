@@ -1,0 +1,15 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 122">
+<rect id="Rectangle 40" x="0.75" y="8" width="18.5" height="11.25" stroke="white" stroke-width="1" stroke-linejoin="round"/>
+<path id="Line 55" d="M0.75 8L5.375 3" stroke="white" stroke-width="1" stroke-linecap="round"/>
+<path id="Line 56" d="M19.25 8L9.23657 3.02898" stroke="white" stroke-width="1" stroke-linecap="round"/>
+<path id="Ellipse 70" d="M9.25 2.5C9.25 3.44726 8.45491 4.25 7.43056 4.25C6.4062 4.25 5.61111 3.44726 5.61111 2.5C5.61111 1.55274 6.4062 0.75 7.43056 0.75C8.45491 0.75 9.25 1.55274 9.25 2.5Z" stroke="white" stroke-width="1"/>
+<line id="Line 57" x1="0.75" y1="13.75" x2="19.25" y2="13.75" stroke="white" stroke-width="1"/>
+<path id="Subtract" fill-rule="evenodd" clip-rule="evenodd" d="M5.41666 13H6.91666C6.91666 11.3431 5.53621 10 3.83333 10C2.13045 10 0.75 11.3431 0.75 13H2.25C2.25 12.21 2.91988 11.5 3.83333 11.5C4.74679 11.5 5.41666 12.21 5.41666 13Z" fill="white"/>
+<path id="Subtract_2" fill-rule="evenodd" clip-rule="evenodd" d="M5.41666 19H6.91666C6.91666 17.3431 5.53621 16 3.83333 16C2.13045 16 0.75 17.3431 0.75 19H2.25C2.25 18.21 2.91988 17.5 3.83333 17.5C4.74679 17.5 5.41666 18.21 5.41666 19Z" fill="white"/>
+<path id="Subtract_3" fill-rule="evenodd" clip-rule="evenodd" d="M11.5833 13H13.0833C13.0833 11.3431 11.7029 10 9.99999 10C8.29711 10 6.91666 11.3431 6.91666 13H8.41666C8.41666 12.21 9.08653 11.5 9.99999 11.5C10.9134 11.5 11.5833 12.21 11.5833 13Z" fill="white"/>
+<path id="Subtract_4" fill-rule="evenodd" clip-rule="evenodd" d="M11.5833 19H13.0833C13.0833 17.3431 11.7029 16 9.99999 16C8.29711 16 6.91666 17.3431 6.91666 19H8.41666C8.41666 18.21 9.08653 17.5 9.99999 17.5C10.9134 17.5 11.5833 18.21 11.5833 19Z" fill="white"/>
+<path id="Subtract_5" fill-rule="evenodd" clip-rule="evenodd" d="M17.75 13H19.25C19.25 11.3431 17.8695 10 16.1666 10C14.4638 10 13.0833 11.3431 13.0833 13H14.5833C14.5833 12.21 15.2532 11.5 16.1666 11.5C17.0801 11.5 17.75 12.21 17.75 13Z" fill="white"/>
+<path id="Subtract_6" fill-rule="evenodd" clip-rule="evenodd" d="M17.75 19H19.25C19.25 17.3431 17.8695 16 16.1666 16C14.4638 16 13.0833 17.3431 13.0833 19H14.5833C14.5833 18.21 15.2532 17.5 16.1666 17.5C17.0801 17.5 17.75 18.21 17.75 19Z" fill="white"/>
+</g>
+</svg>
