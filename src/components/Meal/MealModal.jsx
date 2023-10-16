@@ -2,7 +2,6 @@ import "./MealModal.css";
 import mealLogo from "../../assets/icons/meal.svg";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import foodIcon from "../../assets/icons/food-dinner-icon.svg";
-import axios from "axios";
 import Loader from "../../components/Loader/Loader.jsx";
 import { useState } from "react";
 import timeout from "../../utils/timeout.js";

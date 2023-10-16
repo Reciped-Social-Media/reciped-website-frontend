@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import MealModal from "./MealModal";
 import { useState } from "react";
-import axios from "axios";
 import "./MealCard.css";
 import timeout from "../../utils/timeout.js";
 import Alert from "@mui/material/Alert";
