@@ -1,0 +1,58 @@
+.RecipeSearchBar {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border-radius: 2rem;
+	width: 100%;
+}
+
+.RecipeSearchBar__loading {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem;
+	font-size: large;
+	font-weight: bold;
+}
+
+.RecipeSearchBar__search > input {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 1rem 5rem;
+	border: none;
+	outline: none;
+	background-color: var(--reciped-blue);
+	border-radius: 2rem;
+	text-align: left;
+	font-size: large;
+	font-style: bold;
+}
+
+.RecipeSearchBar__search > input {
+	background-repeat: no-repeat;
+    background-position: 1em center;
+	background-image: url('../../assets/icons/search.svg');
+	color: white;
+}
+
+.RecipeSearchBar__search > input::placeholder {
+	color: white;
+}
+
+.RecipeSearchBar__result {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0.5rem;
+	color: var(--reciped-blue);
+	font-weight: bold;
+	font-size: large;
+	border-bottom: 1px dashed var(--reciped-blue);
+}
+.RecipeSearchBar__result > p {
+	cursor: pointer;
+}
