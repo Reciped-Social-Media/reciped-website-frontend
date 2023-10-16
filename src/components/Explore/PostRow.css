@@ -1,0 +1,38 @@
+.PostRow {
+	margin: 2rem;
+}
+
+.PostRow__title > img {
+	margin: 0rem;
+	padding: 0rem;
+	width: 3rem;
+}
+
+.PostRow__card-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.PostRow__container {
+	transition: transform 1s ease-out;
+}
+
+.PostRow__title {
+	display: flex;
+	flex-direction: row;
+}
+
+.PostRow__scroll-buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.PostRow__scroll-buttons > img {
+	width: 3rem;
+	cursor: pointer;
+}
