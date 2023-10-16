@@ -1,4 +1,4 @@
-.postcard-content {
+.PostCard {
   border-radius: 1.5rem;
   background: var(--reciped-blue);
   margin-right: 60px;
@@ -7,21 +7,21 @@
   height: 415px;
 }
 
-.postuser-info {
+.PostCard__user {
   border-radius: 3rem;
   display: flex;
   justify-content: space-between;
   margin-top: 5px;
 }
 
-.postuser-name {
+.PostCard__username {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-left: 20px;
 }
 
-.postuser-name > p {
+.PostCard__username > p {
   color: var(--Pure-White, #fff);
   border-radius: 3rem;
   font-size: 0.8rem;
@@ -35,7 +35,7 @@
     margin-right: 20px;
 }
 
-.postuser-pic {
+.PostCard__image {
     background-color: white;
     display: flex;
     justify-content: center;
@@ -43,13 +43,13 @@
     width: 250px;
 }
 
-.postuser-pic > img {
+.PostCard__image > img {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 140px;
 }
 
-.postuser-title {
+.PostCard__title {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,7 +67,7 @@
     height: 40px;
 }
 
-.recipe-caption {
+.PostCard__caption {
     background-color: white;
     display: flex;
     flex-direction: row;
@@ -77,15 +77,15 @@
     height: 18%;
 }
 
-.recipe-caption > p {
+.PostCard__caption > p {
     margin-left: 10px;
     margin-right: 10px;
 }
-.recipe-caption > img {
+.PostCard__caption > img {
     margin-left: 10px;
 }
 
-.post-rating {
+.PostCard__rating {
     background-color: white;
     display: flex;
     flex-direction: row;
@@ -111,16 +111,15 @@
     margin-left: 5px;
 }
 
-.post-interactions {
+.PostCard__interactions {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
     background-color: white;
     border-radius: 0 0 1.5rem 1.5rem;
-    padding-bottom: 10px;
-    padding-left: 20px;
     height: 30px;
+	padding: 0 2rem 10px 2rem;
 }
 
 .interact-row {
@@ -153,4 +152,25 @@
 
 .postarrow {
     cursor: pointer;
+}
+
+.PostCard__interaction-like {
+	display: flex;
+	flex-direction: row;
+	margin-left: 0.2rem;
+	padding: 0;
+	align-items: center;
+}
+
+.PostCard__interaction-like > p {
+	margin: 0;
+	padding-left: 0.1rem;
+}
+
+.PostCard__interaction-comments {
+	display: flex;
+	flex-direction: row;
+	margin-right: 0.2rem;
+	padding: 0;
+	align-items: center;
 }
