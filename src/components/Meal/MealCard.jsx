@@ -12,6 +12,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Loader from "../Loader/Loader";
+import { postRequest } from "../../utils/request";
 
 const theme = createTheme({
 	palette: {
@@ -63,12 +64,8 @@ const MealCard = (props) => {
 
 	const handleDeleteRecipe = async () => {
 		setIsLoading(true);
-		const data = { recipeId: props.recipeId, date: props.date };
-		const res = await axios.post("http://localhost:4000/mealplan/remove", data, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-			},
-		});
+		const data = { mealPlanId: props.id };
+		const res = await postRequest("mealplan/remove", data);
 		if (res.status === 200) {
 			setIsLoading(false);
 			setIsSuccess(true);

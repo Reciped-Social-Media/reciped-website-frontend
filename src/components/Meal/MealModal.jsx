@@ -6,6 +6,7 @@ import axios from "axios";
 import Loader from "../../components/Loader/Loader.jsx";
 import { useState } from "react";
 import timeout from "../../utils/timeout.js";
+import { postRequest } from "../../utils/request";
 
 const MealModal = (props) => {
 	const { date, time, source } = props;
@@ -14,18 +15,15 @@ const MealModal = (props) => {
 	const [alertCaption, setAlertCaption] = useState("");
 
 	const addRecipe = async (recipeId) => {
+		console.log(date);
 		setIsLoading(true);
 		const data = {
 			recipeId,
-			date,
+			dateEpochMs: date.unix() * 1000,
 			time,
 			source,
 		};
-		const res = await axios.post("http://localhost:4000/mealplan/add", data, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-			},
-		});
+		const res = await postRequest("mealplan/add", data);
 		if (res.status === 200) {
 			setIsLoading(false);
 			setAlertCaption("added");

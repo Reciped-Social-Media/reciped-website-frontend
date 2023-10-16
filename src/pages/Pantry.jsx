@@ -20,6 +20,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import timeout from "../utils/timeout.js";
+import { getRequest, postRequest } from "../utils/request";
 
 const theme = createTheme({
 	palette: {
@@ -97,7 +98,7 @@ const Pantry = () => {
 		setIsLoading(true);
 		const query = searchQuery;
 		setSearchQuery("");
-		const res = await axios.get(`http://localhost:4000/pantry/search?name=${query}`, { headers });
+		const res = await getRequest(`pantry/search?name=${query}`);
 		setIsLoading(false);
 		setSearchResults(res.data);
 	};
@@ -111,8 +112,8 @@ const Pantry = () => {
 			unit,
 			amount,
 		};
-		const res = await axios.post("http://localhost:4000/pantry/add", sendData, { headers });
-		if (!res.data.error) {
+		const res = await postRequest("pantry/add", sendData);
+		if (res.status === 200) {
 			setIsAddLoading(false);
 			setAlertCaption("added");
 			setisAddSuccess(true);
@@ -125,7 +126,7 @@ const Pantry = () => {
 	const handleIngredientRemove = async (id) => {
 		setIsAdding(true);
 		setIsAddLoading(true);
-		const response = await axios.get(`http://localhost:4000/pantry/remove?ingredientId=${id}`, { headers });
+		const response = await getRequest(`remove?ingredientId=${id}`);
 		if (!response.data.error) {
 			setIsAddLoading(false);
 			setAlertCaption("removed");
@@ -139,7 +140,7 @@ const Pantry = () => {
 		}
 	};
 
-	{searchResults === [] && <h3>Oops...can't find that</h3>;}
+	{searchResults?.length === 0 && <h3>Oops...can't find that</h3>;}
 	const fridgeData = data.filter(ing => ing.storage === "Fridge");
 	const freezerData = data.filter(ing => ing.storage === "Freezer");
 	const pantryData = data.filter(ing => ing.storage === "Pantry");

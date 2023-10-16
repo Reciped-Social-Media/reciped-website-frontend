@@ -239,6 +239,7 @@ export const action = async ({ request }) => {
 	}
 
 	if (res.data.accessToken) {
+		localStorage.setItem("sessionId", res.data.sessionId);
 		localStorage.setItem("accessToken", res.data.accessToken);
 		localStorage.setItem("refreshToken", res.data.refreshToken);
 		localStorage.setItem("username", res.data.username);
