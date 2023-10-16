@@ -1,0 +1,42 @@
+.Cookbook {
+	display: flex;
+	flex-direction: column;
+	margin: 2rem;
+}
+
+.Cookbook__option-bar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	align-items: top;
+	margin-bottom: 2rem;
+}
+
+.Cookbook__option-bar > button {
+	margin-left: 1rem;
+	padding: 1rem;
+	border-radius: 2rem;
+	outline: 0rem;
+	text-wrap: nowrap;
+	width: fit-content;
+	height: fit-content;
+	border: 0.1rem solid var(--reciped-blue);
+	cursor: pointer;
+	font-size: large;
+	font-weight: bold;
+	background: white;
+	color: var(--reciped-blue);
+}
+
+.Cookbook__option-bar:first-child() {
+	margin: 0rem;
+}
+
+.Cookbook__recipes {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: start;
+	align-items: center;
+}
