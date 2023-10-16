@@ -57,7 +57,7 @@ const Planner = () => {
 					{mapper.map(meal => {
 						const recipe = todayRecipes.filter(rec => rec.time === meal.time);
 						console.log(recipe);
-						return <MealCard title={recipe.length < 1 ? null : recipe[0].title} timeIcon={meal.icon} mealLogo={meal.mealLogo} source={recipe.length < 1 ? null : recipe[0].source} time={meal.time} cookbook={cookbookRecipes.filter(rec => rec.category === meal.time)} date={date.format("MM/DD/YYYY")} recipeId={recipe.length < 1 ? null : recipe[0].recipeId}/>;
+						return <MealCard title={recipe.length < 1 ? null : recipe[0].title} timeIcon={meal.icon} mealLogo={meal.mealLogo} source={recipe.length < 1 ? null : recipe[0].source} time={meal.time} cookbook={cookbookRecipes.filter(rec => rec.category === meal.time)} date={date} id={recipe.length < 1 ? null : recipe[0].id}/>;
 					})}
 				</div>
 			</div>
