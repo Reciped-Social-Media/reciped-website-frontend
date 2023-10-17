@@ -118,11 +118,13 @@ const PostCard = ({ data }) => {
 
 	const onReview = () => {
 		setOnReviewError(null);
+
 		postRequest("interaction/review", {
 			postId: id,
 			rating: userReviewRating,
 			comment: reviewCommentRef.current.value,
 		}).then(() => {
+			reviewCommentRef.current.value = "";
 			getRequest(`interaction/review?postId=${id}`)
 				.then(res => {
 					setReviewsData(res.data);
@@ -192,6 +194,7 @@ const PostCard = ({ data }) => {
 						<h3>Comment...</h3>
 						<Rating className="PostCard__commentbox-rating" value={userReviewRating} onChange={(event, newValue) => {setUserReviewRating(newValue);}} precision={1} />
 						<textarea className="PostCard__commentbox-textarea" placeholder={"Add a comment... "} ref={reviewCommentRef}/>
+						{onReviewError && <p className="PostCard__commentbox-error">{onReviewError}</p>}
 						{userReviewRating > 0 && <button className="PostCard__commentbox-button" onClick={onReview} disabled={!userReviewRating}>Post</button>}
 					</div>
 					<div className="PostCard__interaction-comment-contents">
