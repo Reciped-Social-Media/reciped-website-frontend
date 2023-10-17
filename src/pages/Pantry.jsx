@@ -20,6 +20,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import timeout from "../utils/timeout.js";
+import { useNavigate } from "react-router-dom";
 import { getRequest, postRequest } from "../utils/request";
 
 const theme = createTheme({
@@ -65,6 +66,7 @@ const Pantry = () => {
 	const [unit, setUnits] = useState("g");
 	const [amount, setAmount] = useState(null);
 	const [storage, setStorage] = useState("Fridge");
+	const navigate = useNavigate();
 
 	const handleUnitChange = (event) => {
 		setUnits(event.target.value);
@@ -120,6 +122,7 @@ const Pantry = () => {
 			await timeout(3000);
 			setIsAdding(false);
 			setisAddSuccess(false);
+			navigate("/home/pantry");
 		}
 	};
 
@@ -134,6 +137,7 @@ const Pantry = () => {
 			await timeout(3000);
 			setIsAdding(false);
 			setisAddSuccess(false);
+			navigate("/home/pantry");
 		}
 		else {
 			console.log(response.data.error);
@@ -238,7 +242,7 @@ const Pantry = () => {
 					{isAddLoading && <Loader/>}
 					{isAddSuccess && !isAddLoading && <ThemeProvider theme={theme}><Alert severity="success" variant="filled" color="primary" sx={{ color: "white" }}>
 						<AlertTitle>Success</AlertTitle>
-        Your ingredient was successfully {alertCaption} — <strong>Refresh to check it out!</strong>
+        Your ingredient was successfully {alertCaption}
 					</Alert></ThemeProvider>}
 				</div>
 			</div>}
