@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import mealLogo from "../../assets/icons/meal.svg";
 import "./RecipeCard.css";
 import ShareIcon from "@mui/icons-material/Share";
+import pinIcon from "../../assets/icons/PinBlue.svg";
 import { Close, Star, StarBorder } from "@mui/icons-material";
 import { postRequest } from "../../utils/request";
 import Recipe from "./Recipe";
@@ -93,6 +94,7 @@ const RecipeCard = ({ _recipe, _inCookbook }) => {
 							<Close onClick={() => setShowShareModal(false)} style={{ cursor: "pointer" }} />
 						</div>
 						<div className="RecipeCard__share-modal-title">
+							<img src={pinIcon}></img>
 							<h1>Share to the world!</h1>
 						</div>
 						<div className="RecipeCard__share-modal-input">

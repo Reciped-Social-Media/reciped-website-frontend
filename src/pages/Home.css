@@ -10,12 +10,12 @@
 
 .Home__contents {
 	background-color: white;
-	height: 100%;
+	height: auto;
 	border-radius: 2em;
 	margin-left: 2em;
 	width: 100%;
 	box-sizing: border-box;
-	overflow: scroll;
+	overflow: auto;
 }
 
 .Loader {

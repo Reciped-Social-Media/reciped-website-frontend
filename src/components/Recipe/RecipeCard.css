@@ -134,10 +134,19 @@
 }
 
 .RecipeCard__category {
-	color: grey;
+	color: var(--reciped-blue);
 	background-color: white;
 	width: 100%;
 	text-align: center;
 	padding: 1rem 0rem;
 	cursor: pointer;
+}
+
+.RecipeCard__share-modal-title {
+	color: var(--reciped-blue);
+	display: flex;
+}
+
+.RecipeCard__share-modal-title > h1 {
+	margin-left: 10px;
 }

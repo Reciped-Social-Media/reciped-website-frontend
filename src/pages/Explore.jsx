@@ -7,10 +7,12 @@ import breakfastIcon from "../assets/icons/Sun.svg";
 import lunchIcon from "../assets/icons/Pizza.svg";
 import dinnerIcon from "../assets/icons/Moon.svg";
 import dessertIcon from "../assets/icons/iceCream.svg";
+import userIcon from "../assets/icons/user.svg";
 import { useLoaderData } from "react-router-dom";
 import RecipeSearchBar from "../components/Recipe/RecipeSearchBar";
+
 import "./Explore.css";
-import { Icecream } from "@mui/icons-material";
+// import { Icecream } from "@mui/icons-material";
 
 const Explore = () => {
 	const data = useLoaderData();
@@ -21,6 +23,7 @@ const Explore = () => {
 	const [lunchPosts, setLunchPosts] = useState([]);
 	const [dinnerPosts, setDinnerPosts] = useState([]);
 	const [dessertPosts, setDessertPosts] = useState([]);
+	const username = localStorage.getItem("username");
 
 	useEffect(() => {
 		setHotPosts(data.hot);
@@ -34,7 +37,11 @@ const Explore = () => {
 
 	return (
 		<div className="Explore">
-			<div className="Explore__searchbar"><RecipeSearchBar /></div>
+			<div className="Explore__searchbar"><RecipeSearchBar />
+				<div className="explore-username">
+					<img src={userIcon} width={30}></img>
+					<h2>{username}</h2>
+				</div></div>
 			<PostRow title="What's Hot" icon={fireIcon} recipes={hotPosts}/>
 			<PostRow title="Just In" icon={clockIcon} recipes={newPosts}/>
 			<PostRow title="Our Picks" icon={tickIcon} recipes={curatedPosts}/>
