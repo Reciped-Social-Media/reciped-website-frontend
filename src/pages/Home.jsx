@@ -10,7 +10,7 @@ const Home = () => {
 			<Sidebar/>
 			<div className="Home__contents">
 				{!isNavigating && <Outlet/>}
-				<div className="Loader">{isNavigating && <Loader/>}</div>
+				{isNavigating && <div className="Loader"><Loader/></div>}
 			</div>
 		</div>
 	);
