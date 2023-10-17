@@ -51,3 +51,172 @@
 	width: 100%;
 }
 
+.Cookbook__add-recipe-dialog {
+	border: none;
+	border-radius: 2rem;
+	outline: none;
+	box-shadow: 0px 0px 10px 1px rgb(0, 0, 0, 0.3);
+	max-width: 50%;
+	max-height: 50%;
+	padding: 2rem;
+	background-image: url('../assets/Outline.png'); 
+	background-size: contain;
+}
+
+.Cookbook__add-recipe-dialog::-webkit-scrollbar {
+	display: none;
+}
+
+.Cookbook__add-recipe-dialog-close {
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	padding-bottom: 1rem;
+}
+
+.AddRecipeForm {
+	display: flex;
+	flex-direction: column;
+}
+
+.AddRecipeForm__input-title {
+	display: flex;
+	flex-direction: column;
+	margin: 1rem 0;
+}
+
+.AddRecipeForm__input-title > label {
+	margin-bottom: 0.5rem;
+	font-weight: bold;
+}
+
+.AddRecipeForm__input-title > input {
+	border: 0.1rem solid grey;
+	outline: none;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	font-family: var(--font-family);
+	font-size: large;
+}
+
+.AddRecipeForm__text-input-label {
+	font-weight: bold;
+}
+
+.AddRecipeForm__input {
+	display: flex;
+	flex-direction: row;
+	margin: 1rem 0;
+}
+
+.AddRecipeForm__input > input {
+	border: 0.1rem solid grey;
+	outline: none;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	font-family: var(--font-family);
+	font-size: large;
+	width: 100%;
+}
+
+.AddRecipeForm__input > button {
+	margin-left: 0.5rem;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	outline: 0rem;
+	text-wrap: nowrap;
+	width: fit-content;
+	height: fit-content;
+	border: 0.1rem solid var(--reciped-blue);
+	cursor: pointer;
+	font-size: large;
+	font-weight: bold;
+	background: white;
+	color: var(--reciped-blue);
+}
+
+.AddRecipeForm__textarea {
+	display: flex;
+	flex-direction: column;
+	margin: 1rem 0;
+}
+
+.AddRecipeForm__textarea > textarea {
+	border: 0.1rem solid grey;
+	outline: none;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	font-family: var(--font-family);
+	font-size: large;
+	resize: none;
+	height: 100px;
+}
+
+.AddRecipeForm__textarea > button {
+	margin: 1rem 0;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	outline: 0rem;
+	text-wrap: nowrap;
+	width: fit-content;
+	height: fit-content;
+	border: 0.1rem solid var(--reciped-blue);
+	cursor: pointer;
+	font-size: large;
+	font-weight: bold;
+	background: white;
+	color: var(--reciped-blue);
+}
+
+.AddRecipeForm__preview {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	border: 1px solid lightgrey;
+	border-radius: 2rem;
+	margin: 1rem;
+}
+
+.AddedListInputItem__ListInputItem {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0.5rem 0;
+	padding: 0.5rem;
+	border: 1px solid var(--reciped-blue);
+	border-radius: 0.5rem;
+	color: var(--reciped-blue);
+	font-weight: bold;
+}
+
+.AddRecipeForm__submit {
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	padding: 1rem;
+	align-items: center;
+}
+
+.AddRecipeForm__error {
+	color: red;
+	font-weight: bold;
+	margin: 1rem;
+}
+
+.AddRecipeForm__submit-button {
+	justify-self: right;
+	margin: 1rem 0;
+	padding: 0.5rem;
+	border-radius: 2rem;
+	outline: 0rem;
+	text-wrap: nowrap;
+	width: fit-content;
+	height: fit-content;
+	border: 0.1rem solid var(--reciped-blue);
+	cursor: pointer;
+	font-size: large;
+	font-weight: bold;
+	background: white;
+	color: var(--reciped-blue);
+}
