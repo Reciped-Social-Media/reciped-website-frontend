@@ -101,6 +101,7 @@ const MealCard = (props) => {
 						<h3 className="rec-title">Add</h3>
 						<ColorButton
 							endIcon={<QuestionMarkIcon />}
+							onClick={() => handleModalClick("Recommend")}
 						/>
 						<h3 className="rec-title">Recommend</h3>
 					</div>
@@ -110,6 +111,7 @@ const MealCard = (props) => {
 				<MealModal
 					handleModalClick={handleModalClick}
 					cookbook={props.cookbook}
+					recommended={props.recommended}
 					time={props.time}
 					source={source}
 					date={props.date}

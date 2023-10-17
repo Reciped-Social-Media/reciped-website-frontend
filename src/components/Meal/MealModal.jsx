@@ -15,6 +15,9 @@ const MealModal = (props) => {
 	const [alertCaption, setAlertCaption] = useState("");
 	const navigate = useNavigate();
 
+	const cookbookIds = props.cookbook.map(rec => rec.recipeId);
+	const recommendedRecipes = props.recommended.filter(rec => cookbookIds.includes(rec.recommendedId));
+
 	const addRecipe = async (recipeId) => {
 		setIsLoading(true);
 		const data = {
@@ -45,7 +48,14 @@ const MealModal = (props) => {
 				<img src={foodIcon} width={40}></img>
 			</div>
 			<div className="meal-grid">
-				{props.cookbook && props.cookbook.map(rec => (
+				{props.cookbook && source === "Cookbook" && props.cookbook.map(rec => (
+					<div className="meal-container">
+						<img src={mealLogo} width={40} style={{ marginLeft: 10 }}></img>
+						<h4>{rec.title}</h4>
+						<AddBoxIcon sx={{ color: "white", marginRight: 2, cursor: "pointer" }} onClick={() => addRecipe(rec.recipeId)}/>
+					</div>
+				))}
+				{props.recommended && source === "Recommend" && recommendedRecipes.map(rec => (
 					<div className="meal-container">
 						<img src={mealLogo} width={40} style={{ marginLeft: 10 }}></img>
 						<h4>{rec.title}</h4>
