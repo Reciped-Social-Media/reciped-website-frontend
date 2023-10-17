@@ -37,7 +37,7 @@ const Explore = () => {
 
 	return (
 		<div className="Explore">
-			<div className="Explore__searchbar"><RecipeSearchBar />
+			<div className="Explore__searchbar"><RecipeSearchBar caption={"Find your taste"}/>
 				<div className="explore-username">
 					<img src={userIcon} width={30}></img>
 					<h2>{username}</h2>

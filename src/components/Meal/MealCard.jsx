@@ -4,11 +4,13 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import MealModal from "./MealModal";
-import { useState } from "react";
+import { useState, Redirect } from "react";
 import "./MealCard.css";
 import timeout from "../../utils/timeout.js";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Loader from "../Loader/Loader";
 import { postRequest } from "../../utils/request";
@@ -40,6 +42,7 @@ const MealCard = (props) => {
 	const [source, setSource] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSuccess, setIsSuccess] = useState(false);
+	const navigate = useNavigate();
 
 	const alert = (cap) => (
 		<ThemeProvider theme={theme}>
@@ -50,8 +53,7 @@ const MealCard = (props) => {
 				sx={{ color: "white" }}
 			>
 				<AlertTitle>Success</AlertTitle>
-        Your meal was successfully {cap} —{" "}
-				<strong>Refresh to check it out!</strong>
+        Your meal was successfully {cap}
 			</Alert>
 		</ThemeProvider>
 	);
@@ -71,6 +73,7 @@ const MealCard = (props) => {
 			await timeout(2000);
 			setIsSuccess(false);
 		}
+		navigate("/home/planner");
 	};
 
 	return (

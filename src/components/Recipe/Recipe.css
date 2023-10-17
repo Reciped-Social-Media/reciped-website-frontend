@@ -97,3 +97,13 @@
 	cursor: pointer;
 	padding: 1rem;
 }
+
+.alert__div {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 10000vh;
+	width: 10000vh;
+	backdrop-filter: blur(10px);
+	z-index: 1000;
+}

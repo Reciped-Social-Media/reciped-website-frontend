@@ -6,15 +6,16 @@ import Loader from "../../components/Loader/Loader.jsx";
 import { useState } from "react";
 import timeout from "../../utils/timeout.js";
 import { postRequest } from "../../utils/request";
+import { useNavigate } from "react-router-dom";
 
 const MealModal = (props) => {
 	const { date, time, source } = props;
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSucces, setIsSuccess] = useState(false);
 	const [alertCaption, setAlertCaption] = useState("");
+	const navigate = useNavigate();
 
 	const addRecipe = async (recipeId) => {
-		console.log(date);
 		setIsLoading(true);
 		const data = {
 			recipeId,
@@ -31,6 +32,7 @@ const MealModal = (props) => {
 			setIsSuccess(false);
 			props.handleModalClick();
 		}
+		navigate("/home/planner");
 	};
 
 	return (<div className="meal-blur" onDoubleClick={() => props.handleModalClick()}>

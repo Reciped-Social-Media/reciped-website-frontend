@@ -4,10 +4,24 @@ import saltIcon from "../../assets/icons/salt.svg";
 import directionsIcon from "../../assets/icons/directions.svg";
 import "./Recipe.css";
 import { getRequest, postRequest } from "../../utils/request";
+import { useNavigate } from "react-router-dom";
+import timeout from "../../utils/timeout.js";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: "#6c9eba",
+		},
+	},
+});
 
 const Recipe = ({ recipeId, className, title, ingredients, directions }) => {
 	const [inCookbook, setInCookbook] = useState(null);
 	const categoryRef = useRef();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (typeof recipeId !== "number") {
@@ -18,7 +32,8 @@ const Recipe = ({ recipeId, className, title, ingredients, directions }) => {
 		});
 	}, [recipeId, title, ingredients, directions]);
 
-	const handleAddToCookbook = () => {
+
+	const handleAddToCookbook = async () => {
 		if (categoryRef.current.value === "") return;
 		const body = {
 			recipeId: recipeId,
@@ -27,12 +42,16 @@ const Recipe = ({ recipeId, className, title, ingredients, directions }) => {
 		postRequest("cookbook/add", body).then((res) => {
 			if (res.status === 200) setInCookbook(true);
 		});
+		const currentPath = window.location.pathname;
+		if (currentPath !== "/home") navigate(currentPath);
 	};
 
-	const handleRemoveFromCookbook = () => {
+	const handleRemoveFromCookbook = async () => {
 		postRequest("cookbook/remove", { recipeId: recipeId }).then((res) => {
 			if (res.status === 200) setInCookbook(false);
 		});
+		const currentPath = window.location.pathname;
+		if (currentPath !== "/home") navigate(currentPath);
 	};
 
 	return (

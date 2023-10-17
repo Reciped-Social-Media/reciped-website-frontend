@@ -136,6 +136,7 @@ const Cookbook = () => {
 	const addRecipeRef = useRef(null);
 	const [showAddRecipeDialog, setShowAddRecipeDialog] = useState(false);
 	const [addRecipeError, setAddRecipeError] = useState(null);
+	const [searchQuery, setSearchQuery] = useState("");
 
 	const handleAddRecipe = (body) => {
 		setAddRecipeError(null);
@@ -175,11 +176,17 @@ const Cookbook = () => {
 		}
 	}, [showAddRecipeDialog]);
 
+	const filteredRecipes = recipes.filter(rec => rec.title.toLowerCase().includes(searchQuery));
+
 	return (
 		<div className="Cookbook">
 			<div className="Cookbook__contents">
 				<div className="Cookbook__option-bar">
-					<RecipeSearchBar />
+					<div className="RecipeSearchBar__search">
+						<input type="text" placeholder="Find your recipe" style={{ width: 1300 }}
+							onChange={(e) => setSearchQuery(e.target.value)}
+						></input>
+					</div>
 					<button
 						className="Cookbook__option-bar-button"
 						onClick={() => setShowAddRecipeDialog(true)}
@@ -188,7 +195,7 @@ const Cookbook = () => {
 					</button>
 				</div>
 				<div className="Cookbook__recipes">
-					{recipes.map((recipe) => (
+					{filteredRecipes.map((recipe) => (
 						<RecipeCard _recipe={recipe} _inCookbook={true} key={recipe.id} />
 					))}
 				</div>

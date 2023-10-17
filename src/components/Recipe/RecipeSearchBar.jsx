@@ -5,7 +5,7 @@ import { getRequest, postRequest } from "../../utils/request";
 import Recipe from "./Recipe";
 import { Close, Share } from "@mui/icons-material";
 
-const RecipeSearchBar = () => {
+const RecipeSearchBar = (props) => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [loadingResults, setLoadingResults] = useState(false);
 	const [results, setResults] = useState([]);
@@ -69,7 +69,7 @@ const RecipeSearchBar = () => {
 	return (
 		<div className="RecipeSearchBar">
 			<div className="RecipeSearchBar__search">
-				<input type="text" placeholder="Find your taste"
+				<input type="text" placeholder={props.caption}
 					onChangeCapture={(e) => setSearchTerm(e.target.value)}
 					onFocus={() => setFocused(true)}
 					onBlur={async () => {
