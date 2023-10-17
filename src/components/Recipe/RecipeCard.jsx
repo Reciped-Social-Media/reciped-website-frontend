@@ -3,11 +3,11 @@ import mealLogo from "../../assets/icons/meal.svg";
 import "./RecipeCard.css";
 import ShareIcon from "@mui/icons-material/Share";
 import pinIcon from "../../assets/icons/PinBlue.svg";
-import { Close, Star, StarBorder } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import { postRequest } from "../../utils/request";
 import Recipe from "./Recipe";
 
-const RecipeCard = ({ _recipe, _inCookbook }) => {
+const RecipeCard = ({ _recipe }) => {
 	const [recipeData] = useState(_recipe);
 	const [id, setId] = useState(recipeData.id);
 	const [title, setTitle] = useState(recipeData.title);

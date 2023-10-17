@@ -13,6 +13,29 @@ import "./PostCard.css";
 import { Close } from "@mui/icons-material";
 import Recipe from "../Recipe/Recipe";
 
+const PostComment = ({ className, username, comment, rating }) => {
+	return (
+		<div className={className ?? "PostComment"} >
+			<div className="PostComment__contents">
+				<div className="PostComment__user">
+					<div className="PostComment__icon">{username[0]}</div>
+					<p>{username}</p>
+				</div>
+				{ rating &&
+					<div className="PostComment__rating">
+						<div className="tooltip">
+							<span className="tooltiptext">{rating} {rating === 1 ? "star" : "stars"}</span>
+							<Rating name="read-only" value={rating} readOnly precision={0.5} />
+						</div>
+					</div>
+				}
+				<div className="PostComment__text">
+					<p>{comment}</p>
+				</div>
+			</div>
+		</div>
+	);
+};
 
 const PostCard = ({ data }) => {
 	const [postData, setPostData] = useState(data);
@@ -29,11 +52,14 @@ const PostCard = ({ data }) => {
 	const [reviewsData, setReviewsData] = useState([]);
 	const [liked, setLiked] = useState(postData.liked);
 	const [showPostDialog, setShowPostDialog] = useState(false);
-	const postDialog = useRef();
+	const postDialogRef = useRef();
+	const [userReviewRating, setUserReviewRating] = useState(0);
+	const [onReviewError, setOnReviewError] = useState(null);
+	const reviewCommentRef = useRef();
 
 	useEffect(() => {
 		if (showPostDialog) {
-			postDialog?.current?.showModal();
+			postDialogRef?.current?.showModal();
 			getRequest(`interaction/review?postId=${id}`)
 				.then(res => {
 					setReviewsData(res.data);
@@ -42,7 +68,7 @@ const PostCard = ({ data }) => {
 				});
 		}
 		else {
-			postDialog?.current?.close();
+			postDialogRef?.current?.close();
 		}
 	}, [showPostDialog]);
 
@@ -58,7 +84,7 @@ const PostCard = ({ data }) => {
 		setLikes(postData.likes);
 		setReviews(postData.reviews);
 		setLiked(postData.liked);
-	}, [postData]);
+	}, [postData, reviewsData]);
 
 	const handleOnLike = async () => {
 		const body = {
@@ -88,6 +114,24 @@ const PostCard = ({ data }) => {
 				setPostData(updatedPost.data);
 			}
 		}
+	};
+
+	const onReview = () => {
+		setOnReviewError(null);
+		postRequest("interaction/review", {
+			postId: id,
+			rating: userReviewRating,
+			comment: reviewCommentRef.current.value,
+		}).then(() => {
+			getRequest(`interaction/review?postId=${id}`)
+				.then(res => {
+					setReviewsData(res.data);
+				}).catch(() => {
+					// Do nothing
+				});
+		}).catch(err => {
+			setOnReviewError(err.data.error);
+		});
 	};
 
 	return (
@@ -123,48 +167,40 @@ const PostCard = ({ data }) => {
 					<p>{reviews}</p>
 				</div>
 			</div>
-			{showPostDialog && <dialog className="PostCard__modal" ref={postDialog} onCancel={() => showPostDialog(false)}>
+			{showPostDialog && <dialog className="PostCard__modal" ref={postDialogRef} onCancel={() => showPostDialog(false)}>
 				<div className="PostCard__modal-close">
 					<Close onClick={() => setShowPostDialog(false)} style={{ cursor: "pointer" }} />
 				</div>
 				<div className="PostCard__modal-contents">
-					<Recipe recipeId={recipeId} title={title} ingredients={ingredients} directions={directions} />
-					<div className="PostCard__modal-contents-rating">
-						<Rating name="read-only" value={rating} readOnly precision={0.5} />
-						{rating}
-						{(rating === 1 ? " star" : " stars") + " rated by reviewers"}
-					</div>
-					<div className="PostCard__modal-contents-caption">
-						<img src={editLogo} width={30}></img>
-						<p className="PostCard__modal-poster">{username}</p>
-						<p>{caption}</p>
-					</div>
+					<PostComment className="PostCard__modal-caption" username={username} comment={caption} />
+					<Recipe className="PostCard__modal-recipe" recipeId={recipeId} title={title} ingredients={ingredients} directions={directions} />
 					<div className="PostCard__interactions">
 						<div className="PostCard__interaction-like">
 							{liked ? <FavoriteIcon className="PostCard__interaction-like-icon" onClick={handleOnUnlike} style={{ color: "red", cursor: "pointer" }} /> : <FavoriteBorder className="PostCard__interaction-like-icon" onClick={handleOnLike} style={{ color: "grey", cursor: "pointer" }} />}
 							<p>{likes}</p>
+						</div>
+						<div className="PostCard__modal-rating tooltip">
+							<span className="tooltiptext">Rated {rating} {rating === 1 ? "star" : "stars"} by reviewers</span>
+							<Rating name="read-only" value={rating} readOnly precision={0.5} />
 						</div>
 						<div className="PostCard__interaction-comments">
 							<img className="PostCard__interaction-comments-icon" src={chatIcon} width={30}></img>
 							<p>{reviews}</p>
 						</div>
 					</div>
-					{reviewsData.map((review) => (
-						<div className="PostCard__comments-contents">
-							<div className="PostCard__comments-contents-user">
-								<img src={userPost} width={30}></img>
-								<p>{review.username}</p>
-							</div>
-							<div className="PostCard__modal-contents-rating">
-								<Rating name="read-only" value={review.rating} readOnly precision={0.5} />
-								{review.rating}
-								{review.rating === 1 ? " star" : " stars"}
-							</div>
-							<div className="PostCard__comments-contents-comment">
-								<p>{review.comment}</p>
-							</div>
-						</div>
-					))}
+					<div className="PostCard__commentbox">
+						<h3>Comment...</h3>
+						<Rating className="PostCard__commentbox-rating" value={userReviewRating} onChange={(event, newValue) => {setUserReviewRating(newValue);}} precision={1} />
+						<textarea className="PostCard__commentbox-textarea" placeholder={"Add a comment... "} ref={reviewCommentRef}/>
+						{userReviewRating > 0 && <button className="PostCard__commentbox-button" onClick={onReview} disabled={!userReviewRating}>Post</button>}
+					</div>
+					<div className="PostCard__interaction-comment-contents">
+						{
+							reviewsData.map((review) => {
+								return <PostComment className="PostCard__interaction-comment" username={review.username} comment={review.comment} rating={review.rating} />;
+							})
+						}
+					</div>
 				</div>
 			</dialog>}
 

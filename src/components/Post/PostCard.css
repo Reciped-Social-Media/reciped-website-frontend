@@ -174,3 +174,145 @@
 	padding: 0;
 	align-items: center;
 }
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+  }
+  
+  .tooltip .tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: var(--reciped-blue);
+	color: white;
+	text-align: center;
+	padding: 5px 0;
+	border-radius: 6px;
+   
+	position: absolute;
+	z-index: 1;
+	top: -5px;
+  	left: 105%;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+	visibility: visible;
+  }
+
+.PostCard__modal {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	border: none;
+	outline: none;
+	border-radius: 2rem;
+	box-shadow: 0px 0px 10px 1px rgb(0, 0, 0, 0.3);
+	background-image: url('../../assets/Outline.png');
+	background-size: contain;
+	max-height: 50%;
+	max-width: 50%;
+}
+
+.PostCard__modal::-webkit-scrollbar {
+	display: none;
+}
+
+.PostCard__modal-close {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	padding-bottom: 1rem;
+}
+
+.PostCard__modal-recipe {
+	padding: 2rem;
+	border: 1px solid lightgrey;
+	border-radius: 2rem;
+}
+
+.PostComment__contents {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+}
+
+.PostComment__user {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.PostComment__icon {
+	display: flex;
+	width: 2.5rem;
+	height: 2.5rem;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	background-color: var(--reciped-blue);
+	color: white;
+	font-size: large;
+	font-weight: bold;
+}
+
+.PostComment__user > p {
+	margin-left: 1rem;
+	font-weight: bold;
+}
+
+.PostComment__rating {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.PostCard__modal .PostCard__interactions {
+	margin: 1rem;
+}
+
+.PostCard__commentbox {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	border-bottom: 1px solid lightgrey;
+}
+
+.PostCard__commentbox > h3 {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 1rem;
+}
+
+.PostCard__commentbox-rating {
+	margin-bottom: 1rem;
+}
+
+.PostCard__commentbox-textarea {
+	margin-bottom: 1rem;
+	height: 100px;
+	align-items: top;
+	resize: none;
+	padding: 2rem;
+	font-size: large;
+	font-family: var(--font-family);
+	border: 1px solid lightgrey;
+	outline: none;
+	border-radius: 2rem;
+}
+
+.PostCard__commentbox-button:disabled {
+	visibility: hidden;
+}
+
+.PostCard__commentbox-button {
+	align-self: flex-end;
+	background-color: white;
+	border: 1px solid var(--reciped-blue);
+	padding: 1rem;
+	border-radius: 2rem;
+	color: var(--reciped-blue);
+	font-weight: bold;
+	font-size: medium;
+	cursor: pointer;
+}
