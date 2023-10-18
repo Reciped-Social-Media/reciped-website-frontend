@@ -129,7 +129,7 @@ const Pantry = () => {
 	const handleIngredientRemove = async (id) => {
 		setIsAdding(true);
 		setIsAddLoading(true);
-		const response = await getRequest(`remove?ingredientId=${id}`);
+		const response = await postRequest("pantry/remove", { ingredientId: id });
 		if (!response.data.error) {
 			setIsAddLoading(false);
 			setAlertCaption("removed");
@@ -148,7 +148,6 @@ const Pantry = () => {
 	const fridgeData = data.filter(ing => ing.storage === "Fridge");
 	const freezerData = data.filter(ing => ing.storage === "Freezer");
 	const pantryData = data.filter(ing => ing.storage === "Pantry");
-	console.log("Results", searchResults, []);
 
 	return (
 		<div className="pantry-background" onClick={() => setIsSearching(false)}>

@@ -160,6 +160,8 @@ const Cookbook = () => {
 	const addRecipeRef = useRef(null);
 	const [showAddRecipeDialog, setShowAddRecipeDialog] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
+	const [category, setCategory] = useState("All");
+	const categoryRef = useRef(null);
 
 	useEffect(() => {
 		if (showAddRecipeDialog) {
@@ -170,16 +172,24 @@ const Cookbook = () => {
 		}
 	}, [showAddRecipeDialog]);
 
-	const filteredRecipes = recipes.filter(rec => rec.title.toLowerCase().includes(searchQuery));
+	const categoryFilter = recipes.filter(rec => rec.category === category || category === "All");
+	const filteredRecipes = categoryFilter.filter(rec => rec.title.toLowerCase().includes(searchQuery));
 
 	return (
 		<div className="Cookbook">
 			<div className="Cookbook__contents">
 				<div className="Cookbook__option-bar">
 					<div className="RecipeSearchBar__search">
-						<input type="text" placeholder="Find your recipe" style={{ width: 1300 }}
+						<input type="text" placeholder="Find your recipe" style={{ width: 1200 }}
 							onChange={(e) => setSearchQuery(e.target.value)}
 						></input>
+						<select className="RecipeSearchBar_filter" ref={categoryRef} onChange={() => setCategory(categoryRef.current.value)}>
+							<option value="Breakfast">Breakfast</option>
+							<option value="Lunch">Lunch</option>
+							<option value="Dinner">Dinner</option>
+							<option value="Dessert">Dessert</option>
+							<option value="All">All</option>
+						</select>
 					</div>
 					<button
 						className="Cookbook__option-bar-button"
