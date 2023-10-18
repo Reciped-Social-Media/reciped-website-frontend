@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import RecipeSearchBar from "../components/Recipe/RecipeSearchBar";
 import RecipeCard from "../components/Recipe/RecipeCard";
 import "./Cookbook.css";
 import { useEffect, useRef, useState } from "react";
