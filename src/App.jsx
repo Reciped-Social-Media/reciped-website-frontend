@@ -24,7 +24,7 @@ const router = createBrowserRouter([
 				children: [
 					{ path: "cookbook", element: <Cookbook />, loader: () => pageLoader("cookbook") },
 					{ index: true, element: <Explore />, loader: () => pageLoader("explore") },
-					{ path: "chef", element: <Chef />, loader: () => pageLoader("chef") },
+					{ path: "chef", element: <Chef />, loader: () => [] },
 					{ path: "list", element: <List />, loader: () => pageLoader("list") },
 					{ path: "pantry", element: <Pantry />, loader: () => pageLoader("pantry") },
 					{ path: "planner", element: <Planner />, loader: () => pageLoader("mealplan") },
