@@ -94,7 +94,7 @@ const RecipeSearchBar = (props) => {
 				<div className="RecipeSearchBar__modal-close">
 					<Close onClick={() => setShowModal(false)} style={{ cursor: "pointer" }} />
 				</div>
-				<Recipe className="RecipeSearchBar__recipe" recipeId={currentRecipeId} title={currentRecipeTitle} ingredients={currentRecipeIngredients} directions={currentRecipeDirections} />
+				<Recipe recipeId={currentRecipeId} title={currentRecipeTitle} ingredients={currentRecipeIngredients} directions={currentRecipeDirections} />
 			</dialog>
 		</div>
 	);

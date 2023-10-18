@@ -5,18 +5,7 @@ import directionsIcon from "../../assets/icons/directions.svg";
 import "./Recipe.css";
 import { getRequest, postRequest } from "../../utils/request";
 import { useNavigate } from "react-router-dom";
-import timeout from "../../utils/timeout.js";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const theme = createTheme({
-	palette: {
-		primary: {
-			main: "#6c9eba",
-		},
-	},
-});
 
 const Recipe = ({ recipeId, className, title, ingredients, directions }) => {
 	const [inCookbook, setInCookbook] = useState(null);

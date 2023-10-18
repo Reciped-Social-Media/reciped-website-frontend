@@ -104,6 +104,6 @@
 	left: 50%;
 	height: 10000vh;
 	width: 10000vh;
-	backdrop-filter: blur(10px);
+	backdrop-filter: blur(4rem);
 	z-index: 1000;
 }

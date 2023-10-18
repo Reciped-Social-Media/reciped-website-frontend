@@ -56,6 +56,7 @@ const PostCard = ({ data }) => {
 	const [userReviewRating, setUserReviewRating] = useState(0);
 	const [onReviewError, setOnReviewError] = useState(null);
 	const reviewCommentRef = useRef();
+	const [postButton, setPostButton] = useState("Post");
 
 	useEffect(() => {
 		if (showPostDialog) {
@@ -118,7 +119,7 @@ const PostCard = ({ data }) => {
 
 	const onReview = () => {
 		setOnReviewError(null);
-
+		setPostButton("Posting");
 		postRequest("interaction/review", {
 			postId: id,
 			rating: userReviewRating,
@@ -128,6 +129,7 @@ const PostCard = ({ data }) => {
 			getRequest(`interaction/review?postId=${id}`)
 				.then(res => {
 					setReviewsData(res.data);
+					setPostButton("Post");
 				}).catch(() => {
 					// Do nothing
 				});
@@ -169,43 +171,44 @@ const PostCard = ({ data }) => {
 					<p>{reviews}</p>
 				</div>
 			</div>
-			{showPostDialog && <dialog className="PostCard__modal" ref={postDialogRef} onCancel={() => showPostDialog(false)}>
-				<div className="PostCard__modal-close">
-					<Close onClick={() => setShowPostDialog(false)} style={{ cursor: "pointer" }} />
-				</div>
-				<div className="PostCard__modal-contents">
-					<PostComment className="PostCard__modal-caption" username={username} comment={caption} />
-					<Recipe className="PostCard__modal-recipe" recipeId={recipeId} title={title} ingredients={ingredients} directions={directions} />
-					<div className="PostCard__interactions">
-						<div className="PostCard__interaction-like">
-							{liked ? <FavoriteIcon className="PostCard__interaction-like-icon" onClick={handleOnUnlike} style={{ color: "red", cursor: "pointer" }} /> : <FavoriteBorder className="PostCard__interaction-like-icon" onClick={handleOnLike} style={{ color: "grey", cursor: "pointer" }} />}
-							<p>{likes}</p>
+			{showPostDialog &&
+				<dialog className="PostCard__modal" ref={postDialogRef} onCancel={() => showPostDialog(false)}>
+					<div className="PostCard__modal-close">
+						<Close onClick={() => setShowPostDialog(false)} style={{ cursor: "pointer" }} />
+					</div>
+					<div className="PostCard__modal-contents">
+						<PostComment className="PostCard__modal-caption" username={username} comment={caption} />
+						<Recipe className="PostCard__modal-recipe" recipeId={recipeId} title={title} ingredients={ingredients} directions={directions} />
+						<div className="PostCard__interactions">
+							<div className="PostCard__interaction-like">
+								{liked ? <FavoriteIcon className="PostCard__interaction-like-icon" onClick={handleOnUnlike} style={{ color: "red", cursor: "pointer" }} /> : <FavoriteBorder className="PostCard__interaction-like-icon" onClick={handleOnLike} style={{ color: "grey", cursor: "pointer" }} />}
+								<p>{likes}</p>
+							</div>
+							<div className="PostCard__modal-rating tooltip">
+								<span className="tooltiptext">Rated {rating} {rating === 1 ? "star" : "stars"} by reviewers</span>
+								<Rating name="read-only" value={rating} readOnly precision={0.5} />
+							</div>
+							<div className="PostCard__interaction-comments">
+								<img className="PostCard__interaction-comments-icon" src={chatIcon} width={30}></img>
+								<p>{reviews}</p>
+							</div>
 						</div>
-						<div className="PostCard__modal-rating tooltip">
-							<span className="tooltiptext">Rated {rating} {rating === 1 ? "star" : "stars"} by reviewers</span>
-							<Rating name="read-only" value={rating} readOnly precision={0.5} />
+						<div className="PostCard__commentbox">
+							<h3>Comment your thoughts...</h3>
+							<Rating className="PostCard__commentbox-rating" value={userReviewRating} onChange={(event, newValue) => {setUserReviewRating(newValue);}} precision={1} />
+							<textarea className="PostCard__commentbox-textarea" placeholder={"Add a comment... "} ref={reviewCommentRef}/>
+							{onReviewError && <p className="PostCard__commentbox-error">{onReviewError}</p>}
+							{userReviewRating > 0 && <button className="PostCard__commentbox-button" onClick={onReview} disabled={!userReviewRating}>{postButton}</button>}
 						</div>
-						<div className="PostCard__interaction-comments">
-							<img className="PostCard__interaction-comments-icon" src={chatIcon} width={30}></img>
-							<p>{reviews}</p>
+						<div className="PostCard__interaction-comment-contents">
+							{
+								reviewsData.map((review) => {
+									return <PostComment className="PostCard__interaction-comment" username={review.username} comment={review.comment} rating={review.rating} />;
+								})
+							}
 						</div>
 					</div>
-					<div className="PostCard__commentbox">
-						<h3>Comment...</h3>
-						<Rating className="PostCard__commentbox-rating" value={userReviewRating} onChange={(event, newValue) => {setUserReviewRating(newValue);}} precision={1} />
-						<textarea className="PostCard__commentbox-textarea" placeholder={"Add a comment... "} ref={reviewCommentRef}/>
-						{onReviewError && <p className="PostCard__commentbox-error">{onReviewError}</p>}
-						{userReviewRating > 0 && <button className="PostCard__commentbox-button" onClick={onReview} disabled={!userReviewRating}>Post</button>}
-					</div>
-					<div className="PostCard__interaction-comment-contents">
-						{
-							reviewsData.map((review) => {
-								return <PostComment className="PostCard__interaction-comment" username={review.username} comment={review.comment} rating={review.rating} />;
-							})
-						}
-					</div>
-				</div>
-			</dialog>}
+				</dialog>}
 
 		</div>
 	);
