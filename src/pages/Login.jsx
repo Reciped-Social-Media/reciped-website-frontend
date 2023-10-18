@@ -6,12 +6,13 @@ import {
 	useActionData,
 	useNavigation,
 } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./Login.css";
 import logo from "../assets/logo.svg";
 import Alert from "@mui/material/Alert";
 import { useReducer } from "react";
+import Pdf from "../assets/consent-form.pdf";
 
 const Login = () => {
 	const [searchParams] = useSearchParams();
@@ -19,6 +20,7 @@ const Login = () => {
 	const data = useActionData();
 	const navigation = useNavigation();
 	const isSubmitting = navigation.state === "submitting";
+	const [acceptedTerms, setAcceptedTerms] = useState(false);
 	let isFormValid = true;
 
 	const isPasswordValid = (inputString) => {
@@ -80,10 +82,11 @@ const Login = () => {
 
 	if (!isLogin) {
 		isFormValid =
-      firstNameState.isValid &&
-      lastNameState.isValid &&
-      usernameState.isValid &&
-      passwordState.isValid;
+			firstNameState.isValid &&
+			lastNameState.isValid &&
+			usernameState.isValid &&
+			passwordState.isValid &&
+			acceptedTerms;
 	}
 	else {
 		isFormValid = true;
@@ -165,6 +168,17 @@ const Login = () => {
 								}
 								onBlur={() => passwordDispatch({ type: "BLUR" })}
 							></input>
+							{!isLogin && (
+								<div className="Login__terms">
+									<input className="Login__terms-input" type="checkbox" id="terms" name="terms" onChange={(e) => { setAcceptedTerms(e.target.checked); }}></input>
+									<label className="Login__terms-label" htmlFor="terms">
+										By signing up, you are agreeing to our{" "}
+										<a className="Login__href" href = {Pdf}>
+											Consent Form
+										</a>{" "}
+									</label>
+								</div>
+							)}
 							{!isLogin && !firstNameState.isValid && firstNameState.isTouched && (
 								<Alert className="Login__alert" severity="info" color="error">
                   First name may not be empty

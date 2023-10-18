@@ -128,3 +128,16 @@
 	font-size: 0.8em;
 	margin-top: 1em;
 }
+
+.Login__terms {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	color: white;
+	margin: 1rem 0;
+}
+
+.Login__terms-input {
+	margin-right: 0.5rem;
+
+}
