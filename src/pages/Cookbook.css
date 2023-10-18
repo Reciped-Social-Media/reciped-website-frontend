@@ -207,7 +207,7 @@
 .AddRecipeForm__submit-button {
 	justify-self: right;
 	margin: 1rem 0;
-	padding: 0.5rem;
+	padding: 1rem;
 	border-radius: 2rem;
 	outline: 0rem;
 	text-wrap: nowrap;
@@ -215,8 +215,8 @@
 	height: fit-content;
 	border: 0.1rem solid var(--reciped-blue);
 	cursor: pointer;
-	font-size: large;
+	font-size: larger;
 	font-weight: bold;
-	background: white;
-	color: var(--reciped-blue);
+	background: var(--reciped-blue);
+	color: white;
 }
