@@ -8,25 +8,26 @@ import { postRequest } from "../utils/request";
 
 const AddedListInputItem = ({ item, index, removeItem }) => {
 	return (
-		<div className="Cookbook__ListInputItem">
-			<div className="Cookbook__ListInputItem-value">{item}</div>
+		<div className="AddedListInputItem__ListInputItem">
+			<div className="AddedListInputItem__ListInputItem-value">{item}</div>
 			{index >= 0 && (
-				<button onClick={() => removeItem(index)}>X</button>
+				<Close onClick={() => removeItem(index)} style={{ cursor: "pointer", color: "lightcoral" }}/>
 			)}
 		</div>
 	);
 };
 
-const AddRecipeForm = ({ onSubmit }) => {
+const AddRecipeForm = () => {
 	const [title, setTitle] = useState("");
 	const [ingredients, setIngredients] = useState([]);
 	const [directions, setDirections] = useState([]);
 	const [newIngredient, setNewIngredient] = useState("");
 	const [newDirection, setNewDirection] = useState("");
 	const [previewRecipe, setPreviewRecipe] = useState(null);
+	const [addRecipeError, setAddRecipeError] = useState(null);
 
 	useEffect(() => {
-		setPreviewRecipe({ title, ingredients, directions });
+		if (title !== "" || ingredients.length > 0 || directions.length > 0) setPreviewRecipe({ title, ingredients, directions });
 	}, [title, ingredients, directions]);
 
 	const handleTitleChange = (event) => {
@@ -57,87 +58,11 @@ const AddRecipeForm = ({ onSubmit }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		const body = { title, ingredients, directions };
-		onSubmit(body);
-	};
-
-	const handleRemoveIngredient = (index) => {
-		setIngredients(ingredients.filter((_, i) => i !== index));
-	};
-
-	const handleRemoveDirection = (index) => {
-		setDirections(directions.filter((_, i) => i !== index));
-	};
-
-	return (
-		<form onSubmit={handleSubmit}>
-			<div>
-				<label htmlFor="title">Title:</label>
-				<input type="text" id="title" value={title} onChange={handleTitleChange} />
-			</div>
-			<div>
-				<label htmlFor="ingredients">Ingredients:</label>
-				<div className="Cookbook__ListInput">
-					{ingredients.map((ingredient, index) => (
-						<AddedListInputItem
-							key={index}
-							item={ingredient}
-							index={index}
-							removeItem={handleRemoveIngredient}
-						/>
-					))}
-					<div className="Cookbook__ListInputItem">
-						<input
-							type="text"
-							value={newIngredient}
-							onChange={handleIngredientChange}
-							placeholder="Add ingredient"
-						/>
-						<button type="button" onClick={handleAddIngredient}>
-							Add
-						</button>
-					</div>
-				</div>
-			</div>
-			<div>
-				<label htmlFor="directions">Directions:</label>
-				<div className="Cookbook__ListInput">
-					{directions.map((direction, index) => (
-						<AddedListInputItem
-							key={index}
-							item={direction}
-							index={index}
-							removeItem={handleRemoveDirection}
-						/>
-					))}
-					<div className="Cookbook__ListInputItem">
-						<input
-							type="text"
-							value={newDirection}
-							onChange={handleDirectionChange}
-							placeholder="Add direction"
-						/>
-						<button type="button" onClick={handleAddDirection}>
-							Add
-						</button>
-					</div>
-				</div>
-			</div>
-			<h3>Preview</h3>
-			{previewRecipe && <Recipe title={previewRecipe.title} ingredients={previewRecipe.ingredients} directions={previewRecipe.directions} />}
-			<button type="submit">Submit</button>
-		</form>
-	);
-};
-
-const Cookbook = () => {
-	const recipes = useLoaderData();
-	const addRecipeRef = useRef(null);
-	const [showAddRecipeDialog, setShowAddRecipeDialog] = useState(false);
-	const [addRecipeError, setAddRecipeError] = useState(null);
-	const [searchQuery, setSearchQuery] = useState("");
-
-	const handleAddRecipe = (body) => {
+		const body = {
+			title,
+			ingredients,
+			directions,
+		};
 		setAddRecipeError(null);
 		if (!body.title) {
 			setAddRecipeError("Title cannot be empty!");
@@ -165,6 +90,86 @@ const Cookbook = () => {
 				setAddRecipeError(error);
 			});
 	};
+
+	const handleRemoveIngredient = (index) => {
+		setIngredients(ingredients.filter((_, i) => i !== index));
+	};
+
+	const handleRemoveDirection = (index) => {
+		setDirections(directions.filter((_, i) => i !== index));
+	};
+
+	return (
+		<form className="AddRecipeForm" onSubmit={handleSubmit}>
+			<h1 className="AddRecipeForm__title">Create Your Own Recipe!</h1>
+			<div className="AddRecipeForm__input-title">
+				<label>Title</label>
+				<input type="text" id="title" value={title} onChange={handleTitleChange} />
+			</div>
+			<div className="AddRecipeForm__text-inputs">
+				<div className="AddRecipeForm__text-input-label">Ingredients</div>
+				<div className="AddRecipeForm__input-item">
+					{ingredients.map((ingredient, index) => (
+						<AddedListInputItem
+							key={index}
+							item={ingredient}
+							index={index}
+							removeItem={handleRemoveIngredient}
+						/>
+					))}
+					<div className="AddRecipeForm__input">
+						<input
+							type="text"
+							value={newIngredient}
+							onChange={handleIngredientChange}
+							placeholder="Add ingredient"
+						/>
+						<button type="button" onClick={handleAddIngredient}>
+							Add
+						</button>
+					</div>
+				</div>
+				<div className="AddRecipeForm__text-input-label">Directions</div>
+				<div className="AddRecipeForm__input-item">
+					{directions.map((direction, index) => (
+						<AddedListInputItem
+							key={index}
+							item={direction}
+							index={index}
+							removeItem={handleRemoveDirection}
+						/>
+					))}
+					<div className="AddRecipeForm__textarea">
+						<textarea
+							type="text"
+							value={newDirection}
+							onChange={handleDirectionChange}
+							placeholder="Add direction"
+						/>
+						<button type="button" onClick={handleAddDirection}>
+							Add
+						</button>
+					</div>
+				</div>
+			</div>
+			{previewRecipe &&
+			<div className="AddRecipeForm__preview">
+				<h2>Preview</h2>
+				<Recipe title={previewRecipe.title} ingredients={previewRecipe.ingredients} directions={previewRecipe.directions} />
+			</div>}
+			<div className="AddRecipeForm__submit">
+				{addRecipeError && <div className="AddRecipeForm__error">{addRecipeError}</div>}
+				<button className="AddRecipeForm__submit-button" type="submit">Submit</button>
+			</div>
+		</form>
+	);
+};
+
+const Cookbook = () => {
+	const recipes = useLoaderData();
+	const addRecipeRef = useRef(null);
+	const [showAddRecipeDialog, setShowAddRecipeDialog] = useState(false);
+	const [searchQuery, setSearchQuery] = useState("");
 
 	useEffect(() => {
 		if (showAddRecipeDialog) {
@@ -200,9 +205,10 @@ const Cookbook = () => {
 				</div>
 			</div>
 			<dialog className="Cookbook__add-recipe-dialog" ref={addRecipeRef} onCancel={() => setShowAddRecipeDialog(false)}>
-				<Close className="Cookbook__add-recipe-dialog-close" onClick={() => setShowAddRecipeDialog(false)} />
-				<AddRecipeForm onSubmit={handleAddRecipe} />
-				{addRecipeError && <div className="Cookbook__add-recipe-dialog-error">{addRecipeError}</div>}
+				<div className="Cookbook__add-recipe-dialog-close">
+					<Close onClick={() => setShowAddRecipeDialog(false)} style={{ cursor: "pointer" }} />
+				</div>
+				<AddRecipeForm />
 			</dialog>
 		</div>
 	);
