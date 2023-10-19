@@ -36,6 +36,20 @@
 	background-color: white;
 }
 
+.Chef__recipes {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.Chef_recipe {
+	margin-top: rem;
+	margin-bottom: 2rem;
+	flex-direction: column;
+	background-color: white;
+	width: 70%;
+}
+
 .GenerateRecipeForm__input-item {
 	background-color: white;
 }

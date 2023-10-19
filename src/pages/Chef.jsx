@@ -45,13 +45,14 @@ const GenerateRecipeForm = ({ onSubmit }) => {
 			ingredients,
 		};
 		setAddIngredientError(null);
-		postRequest("/recommend", body)
+		postRequest("chef/recommend", body)
 			.then(response => {
+				console.log(response);
 				if (response.error) {
 					setAddIngredientError(response.error);
 				}
 				else {
-					setRecommendedRecipes(response);
+					setRecommendedRecipes(response.data);
 				}
 			})
 			.catch(() => setAddIngredientError("Something went wrong!"));
@@ -100,6 +101,8 @@ const Chef = () => {
 		setRecommendedRecipes(recipes);
 	};
 
+	console.log(recommendedRecipes);
+
 	return (
 		<div className="Chef">
 			<div className="Chef__contents">
@@ -108,7 +111,7 @@ const Chef = () => {
 					<GenerateRecipeForm onSubmit={handleSubmit} />
 				</div>
 				<div className="Chef__recipes">
-					{recommendedRecipes.map(recipe => (<Recipe title={recipe.title} ingredients={recipe.ingredients} directions={recipe.directions} />))}
+					{recommendedRecipes.map(recipe => (<div className="Chef_recipe"><Recipe title={recipe.title} ingredients={recipe.ingredients} directions={recipe.directions} /></div>))}
 				</div>
 			</div>
 		</div>
