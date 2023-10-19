@@ -5,6 +5,7 @@ import { postRequest } from "../utils/request";
 import { Close } from "@mui/icons-material";
 import "./Chef.css";
 import AddedListInputItem from "../components/AddedListInputItem/AddedListInputItem";
+import RecipeCard from "../components/Recipe/RecipeCard";
 
 const GenerateRecipeForm = ({ onSubmit }) => {
 	const [ingredients, setIngredients] = useState([]);
@@ -45,17 +46,17 @@ const GenerateRecipeForm = ({ onSubmit }) => {
 			ingredients,
 		};
 		setAddIngredientError(null);
-		postRequest("/recommend", body)
+		postRequest("chef/recommend", body)
 			.then(response => {
 				if (response.error) {
-					setAddIngredientError(response.error);
+					setAddIngredientError(response.data.error);
 				}
 				else {
-					setRecommendedRecipes(response);
+					setRecommendedRecipes(response.data);
+					onSubmit(recommendedRecipes);
 				}
 			})
 			.catch(() => setAddIngredientError("Something went wrong!"));
-		onSubmit(recommendedRecipes);
 	};
 
 	return (
@@ -97,6 +98,7 @@ const Chef = () => {
 	const [recommendedRecipes, setRecommendedRecipes] = useState([]);
 
 	const handleSubmit = (recipes) => {
+		console.log(recipes);
 		setRecommendedRecipes(recipes);
 	};
 
@@ -108,7 +110,7 @@ const Chef = () => {
 					<GenerateRecipeForm onSubmit={handleSubmit} />
 				</div>
 				<div className="Chef__recipes">
-					{recommendedRecipes.map(recipe => (<Recipe title={recipe.title} ingredients={recipe.ingredients} directions={recipe.directions} />))}
+					{recommendedRecipes.map(recipe => (<RecipeCard id={recipe.id} title={recipe.title} ingredients={recipe.ingredients} directions={recipe.directions} />))}
 				</div>
 			</div>
 		</div>

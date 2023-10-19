@@ -200,7 +200,7 @@ const Cookbook = () => {
 				</div>
 				<div className="Cookbook__recipes">
 					{filteredRecipes.map((recipe) => (
-						<RecipeCard _recipe={recipe} _inCookbook={true} key={recipe.id} />
+						<RecipeCard id={recipe.id} title={recipe.title} ingredients={recipe.ingredients} directions={recipe.directions} category={recipe.category} />
 					))}
 				</div>
 			</div>

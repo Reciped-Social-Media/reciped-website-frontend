@@ -7,13 +7,7 @@ import { Close } from "@mui/icons-material";
 import { postRequest } from "../../utils/request";
 import Recipe from "./Recipe";
 
-const RecipeCard = ({ _recipe }) => {
-	const [recipeData] = useState(_recipe);
-	const [id, setId] = useState(recipeData.id);
-	const [title, setTitle] = useState(recipeData.title);
-	const [ingredients, setIngredients] = useState(recipeData.ingredients);
-	const [directions, setDirections] = useState(recipeData.directions);
-	const [category] = useState(recipeData.category);
+const RecipeCard = ({ id, title, ingredients, directions, category }) => {
 	const [sharing, setSharing] = useState(false);
 	const [sharedError, setSharedError] = useState("");
 
@@ -37,12 +31,7 @@ const RecipeCard = ({ _recipe }) => {
 		else {
 			shareModal.current.close();
 		}
-		setId(recipeData.id);
-		setTitle(recipeData.title);
-		setIngredients(recipeData.ingredients);
-		setDirections(recipeData.directions);
 	}, [
-		recipeData,
 		showRecipeModal,
 		showShareModal,
 	]);
