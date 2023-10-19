@@ -48,6 +48,7 @@ const GenerateRecipeForm = ({ onSubmit }) => {
 		setAddIngredientError(null);
 		postRequest("chef/recommend", body)
 			.then(response => {
+				console.log(response);
 				if (response.error) {
 					setAddIngredientError(response.data.error);
 				}
@@ -101,6 +102,8 @@ const Chef = () => {
 		console.log(recipes);
 		setRecommendedRecipes(recipes);
 	};
+
+	console.log(recommendedRecipes);
 
 	return (
 		<div className="Chef">
